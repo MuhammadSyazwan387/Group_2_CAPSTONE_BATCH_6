@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optima Bank - Voucher Redemption</title>
+    <link rel="stylesheet" href="homepage.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">Optima Bank</h1>
+                <div class="user-menu">
+                    <span class="welcome-text">Welcome back!</span>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="hero-section">
+                <h1 class="hero-title">Voucher Redemption Center</h1>
+                <p class="hero-subtitle">Redeem your voucher codes and claim your rewards instantly</p>
+            </div>
+
+            <!-- Voucher Redemption Form -->
+            <div class="voucher-form-section">
+                <div class="voucher-form-card">
+                    <h2>🎟️ Redeem Voucher Code</h2>
+                    <p>Enter your voucher code below to claim your reward</p>
+                    <form id="voucherForm">
+                        <div class="voucher-input-group">
+                            <input type="text" id="voucherCode" placeholder="Enter voucher code (e.g., SAVE2024)" required>
+                            <button type="submit" class="redeem-btn">Redeem Now</button>
+                        </div>
+                    </form>
+                    <div id="redemptionResult" class="redemption-result hidden"></div>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎁</div>
+                    <h3>Available Vouchers</h3>
+                    <p>Browse and discover new voucher codes for rewards</p>
+                    <button class="feature-btn">Browse Vouchers</button>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Redemption History</h3>
+                    <p>View all your previously redeemed vouchers and rewards</p>
+                    <button class="feature-btn">View History</button>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Rewards Balance</h3>
+                    <p>Check your current reward points and available balance</p>
+                    <button class="feature-btn">Check Balance</button>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Notifications</h3>
+                    <p>Get notified about new vouchers and special offers</p>
+                    <button class="feature-btn">Manage Alerts</button>
+                </div>
+            </div>
+
+            <div class="recent-activity">
+                <h2>Recent Redemptions</h2>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon">🎟️</div>
+                        <div class="activity-details">
+                            <h4>Shopping Voucher - $50 Discount</h4>
+                            <p>2 hours ago • Code: SHOP50</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">🍕</div>
+                        <div class="activity-details">
+                            <h4>Food Delivery Voucher</h4>
+                            <p>Yesterday • Code: FOOD25 • $25 Off</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">🎮</div>
+                        <div class="activity-details">
+                            <h4>Gaming Credit Voucher</h4>
+                            <p>3 days ago • Code: GAME100 • $100 Credit</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="homepage.js"></script>
+</body>
+</html>

@@ -5,7 +5,7 @@ function showLogin() {
     document.querySelectorAll('.toggle-btn')[1].classList.remove('active');
     
     document.getElementById('formTitle').textContent = 'Welcome Back!';
-    document.getElementById('formSubtitle').textContent = 'Enter your email and password';
+    document.getElementById('formSubtitle').textContent = 'Access your banking dashboard';
 }
 
 function showSignup() {
@@ -14,8 +14,8 @@ function showSignup() {
     document.querySelectorAll('.toggle-btn')[0].classList.remove('active');
     document.querySelectorAll('.toggle-btn')[1].classList.add('active');
     
-    document.getElementById('formTitle').textContent = 'Create Account';
-    document.getElementById('formSubtitle').textContent = 'Start your journey with us today';
+    document.getElementById('formTitle').textContent = 'Open Account';
+    document.getElementById('formSubtitle').textContent = 'Start your banking journey with Optima';
 }
 
 function togglePassword(inputId) {
@@ -39,8 +39,22 @@ function showForgotPassword() {
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(this);
-    console.log('Login attempt:', Object.fromEntries(formData));
-    alert('Login functionality would be implemented here.');
+    const email = formData.get('email');
+    const password = formData.get('password');
+    
+    // Simple validation - in real app, this would be server-side
+    if (email && password) {
+        console.log('Login attempt:', Object.fromEntries(formData));
+        
+        // Store login status
+        localStorage.setItem('userLoggedIn', 'true');
+        localStorage.setItem('userEmail', email);
+        
+        // Redirect to homepage
+        window.location.href = 'homepage.html';
+    } else {
+        alert('Please enter both email and password.');
+    }
 });
 
 document.getElementById('signupForm').addEventListener('submit', function(e) {
@@ -54,8 +68,22 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         return;
     }
     
-    console.log('Signup attempt:', Object.fromEntries(formData));
-    alert('Signup functionality would be implemented here.');
+    const email = formData.get('email');
+    const name = formData.get('name');
+    
+    if (email && password && name) {
+        console.log('Signup attempt:', Object.fromEntries(formData));
+        
+        // Store login status after successful signup
+        localStorage.setItem('userLoggedIn', 'true');
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userName', name);
+        
+        // Redirect to homepage
+        window.location.href = 'homepage.html';
+    } else {
+        alert('Please fill in all required fields.');
+    }
 });
 
 // Social login handlers
@@ -68,6 +96,12 @@ document.querySelectorAll('.social-btn').forEach(btn => {
 
 // Wait for DOM to be fully loaded before adding event listeners
 document.addEventListener('DOMContentLoaded', function() {
-    // You can add any initialization code here
-    console.log('Authentication page loaded successfully');
+    // Check if user is already logged in
+    const userLoggedIn = localStorage.getItem('userLoggedIn');
+    if (userLoggedIn === 'true') {
+        // User is already logged in, redirect to homepage
+        window.location.href = 'homepage.html';
+    }
+    
+    console.log('Optima Bank authentication page loaded successfully');
 });
