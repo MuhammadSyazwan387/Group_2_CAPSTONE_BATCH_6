@@ -1,0 +1,29 @@
+[15-Sep-2025 17:20:27 Europe/Berlin] Signup attempt - Input data: {"fullname":"SHAZARIF AFWAN","email":"dukun123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[15-Sep-2025 17:20:27 Europe/Berlin] Database connection successful
+[15-Sep-2025 17:20:27 Europe/Berlin] Signup PDO error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'optima_bank.users' doesn't exist
+[15-Sep-2025 17:20:28 Europe/Berlin] Signup attempt - Input data: {"fullname":"SHAZARIF AFWAN","email":"dukun123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[15-Sep-2025 17:20:28 Europe/Berlin] Database connection successful
+[15-Sep-2025 17:20:28 Europe/Berlin] Signup PDO error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'optima_bank.users' doesn't exist
+[15-Sep-2025 17:20:28 Europe/Berlin] Signup attempt - Input data: {"fullname":"SHAZARIF AFWAN","email":"dukun123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[15-Sep-2025 17:20:28 Europe/Berlin] Database connection successful
+[15-Sep-2025 17:20:28 Europe/Berlin] Signup PDO error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'optima_bank.users' doesn't exist
+[15-Sep-2025 17:20:35 Europe/Berlin] Signup attempt - Input data: {"fullname":"SHAZARIF AFWAN","email":"dukun123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[15-Sep-2025 17:20:35 Europe/Berlin] Database connection successful
+[15-Sep-2025 17:20:35 Europe/Berlin] Signup PDO error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'optima_bank.users' doesn't exist
+[15-Sep-2025 17:23:16 Europe/Berlin] Signup attempt - Input data: {"fullname":"SHAZARIF AFWAN","email":"dukun123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[15-Sep-2025 17:23:16 Europe/Berlin] Database connection successful
+[15-Sep-2025 17:23:16 Europe/Berlin] Password hashed successfully
+[15-Sep-2025 17:23:16 Europe/Berlin] Signup PDO error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'created_at' in 'field list'
+[15-Sep-2025 17:23:23 Europe/Berlin] Signup attempt - Input data: {"fullname":"SHAZARIF AFWAN","email":"dukun123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[15-Sep-2025 17:23:23 Europe/Berlin] Database connection successful
+[15-Sep-2025 17:23:23 Europe/Berlin] Password hashed successfully
+[15-Sep-2025 17:23:23 Europe/Berlin] Signup PDO error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'created_at' in 'field list'
+[15-Sep-2025 17:23:57 Europe/Berlin] Signup attempt - Input data: {"fullname":"SHAZARIF AFWAN","email":"dukun123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[15-Sep-2025 17:23:57 Europe/Berlin] Database connection successful
+[15-Sep-2025 17:23:57 Europe/Berlin] Password hashed successfully
+[15-Sep-2025 17:23:57 Europe/Berlin] Signup PDO error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'created_at' in 'field list'
+[15-Sep-2025 17:24:21 Europe/Berlin] Signup attempt - Input data: {"fullname":"SHAZARIF AFWAN","email":"dukun123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[15-Sep-2025 17:24:21 Europe/Berlin] Database connection successful
+[15-Sep-2025 17:24:21 Europe/Berlin] Password hashed successfully
+[15-Sep-2025 17:24:21 Europe/Berlin] Attempting to insert user with email: dukun123@gmail.com
+[15-Sep-2025 17:24:21 Europe/Berlin] User inserted successfully with ID: 1
