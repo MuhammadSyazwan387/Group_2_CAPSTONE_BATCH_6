@@ -40,7 +40,8 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(this);
     console.log('Login attempt:', Object.fromEntries(formData));
-    alert('Login functionality would be implemented here.');
+    
+       window.location.href = 'Homepage.html';
 });
 
 document.getElementById('signupForm').addEventListener('submit', function(e) {
