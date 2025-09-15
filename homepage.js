@@ -150,6 +150,17 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
     
+    // Display user information
+    const userName = localStorage.getItem('userName');
+    const userPoints = localStorage.getItem('userPoints');
+    
+    if (userName) {
+        const welcomeText = document.querySelector('.welcome-text');
+        if (welcomeText) {
+            welcomeText.textContent = `Welcome back, ${userName}!`;
+        }
+    }
+    
     // Voucher form handler
     document.getElementById('voucherForm').addEventListener('submit', function(e) {
         e.preventDefault();

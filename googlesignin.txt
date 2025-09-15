@@ -1,0 +1,7 @@
+Client ID:
+
+269492663844-jjsavuri4m3movsotbabtcsa0cpssvpt.apps.googleusercontent.com
+
+Client Secret:
+
+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

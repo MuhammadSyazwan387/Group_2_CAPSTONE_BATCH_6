@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optima Bank - Login & Signup</title>
     <link rel="stylesheet" href="auth.css">
+    <!-- Google Sign-In API -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <div class="container">
@@ -56,9 +58,22 @@
                 </div>
 
                 <div class="social-login">
-                    <button type="button" class="social-btn">
-                        <span>G</span> Google
-                    </button>
+                    <div id="g_id_onload"
+                         data-client_id="269492663844-jjsavuri4m3movsotbabtcsa0cpssvpt.apps.googleusercontent.com"
+                         data-context="signin"
+                         data-ux_mode="popup"
+                         data-callback="handleGoogleSignIn"
+                         data-auto_prompt="false">
+                    </div>
+                    
+                    <div id="g_id_signin"
+                         data-type="standard"
+                         data-size="large"
+                         data-theme="outline"
+                         data-text="continue_with"
+                         data-shape="rectangular"
+                         data-logo_alignment="left">
+                    </div>
                 </div>
             </form>
 
@@ -102,9 +117,14 @@
                 </div>
 
                 <div class="social-login">
-                    <button type="button" class="social-btn">
-                        <span>G</span> Google
-                    </button>
+                    <div id="g_id_signin_signup"
+                         data-type="standard"
+                         data-size="large"
+                         data-theme="outline"
+                         data-text="continue_with"
+                         data-shape="rectangular"
+                         data-logo_alignment="left">
+                    </div>
                 </div>
             </form>
         </div>
