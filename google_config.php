@@ -6,8 +6,8 @@
 // 3. Create credentials (OAuth 2.0 Client IDs)
 // 4. Add your domain to authorized domains
 
-define('GOOGLE_CLIENT_ID', '269492663844-jjsavuri4m3movsotbabtcsa0cpssvpt.apps.googleusercontent.com');
-define('GOOGLE_CLIENT_SECRET', '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');
+define('GOOGLE_CLIENT_ID', '');
+define('GOOGLE_CLIENT_SECRET', '');
 define('GOOGLE_REDIRECT_URI', 'http://localhost/Group_2_CAPSTONE_BATCH_6/authentication_page.html');
 
 // Verify that the Client ID is properly configured
