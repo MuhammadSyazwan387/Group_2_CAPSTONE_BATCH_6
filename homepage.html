@@ -36,10 +36,10 @@
     <div class="profile">
       <img src="https://www.freepik.com/icon/profile_6878865" alt="Profile" class="profile-pic"/>
       <div class="dropdown">
-        <a href="#">My Account</a>
+        <a href="profile.html">My Account</a>
         <a href="#">Orders</a>
         <a href="#">Settings</a>
-        <a href="#">Logout</a>
+        <a href="#" onclick="logout()">Logout</a>
       </div>
     </div>
   </div>
@@ -81,15 +81,6 @@
 <section class="products">
   <h2>Our Vouchers</h2>
   <div class="product-grid" id="voucher-grid">
-    <!-- Loading placeholder -->
-    <div class="loading">Loading vouchers...</div>
-  </div>
-</section>
-
-<!-- Popular Vouchers -->
-<section class="products">
-  <h2>Popular Vouchers</h2>
-  <div class="product-grid" id="popular-vouchers">
     <!-- Loading placeholder -->
     <div class="loading">Loading vouchers...</div>
   </div>
@@ -151,6 +142,18 @@
 </footer>
 
 <script>
+// Logout function
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('userLoggedIn');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('redeemedVouchers');
+        
+        window.location.href = 'authentication_page.html';
+    }
+}
+
 // Fetch and display vouchers
 async function loadVouchers() {
     try {
@@ -182,8 +185,8 @@ async function loadVouchers() {
             return;
         }
         
-        // Display vouchers
-        vouchers.forEach(voucher => {
+        // Display only first 3 vouchers (as per your requirement)
+        vouchers.slice(0, 3).forEach(voucher => {
             const voucherCard = createVoucherCard(voucher);
             voucherGrid.appendChild(voucherCard);
         });
@@ -224,6 +227,29 @@ function showError(message) {
     
     voucherGrid.innerHTML = '<div class="error">' + (message || 'Unable to load vouchers') + '</div>';
 }
+
+// Profile dropdown functionality
+document.addEventListener('click', function(e) {
+    const profile = document.querySelector('.profile');
+    if (!profile) return;
+
+    if (profile.contains(e.target)) {
+        const isProfileClick = e.target.closest('.profile-pic') || e.target.closest('.profile');
+        if (isProfileClick) {
+            profile.classList.toggle('open');
+        }
+        return;
+    }
+
+    profile.classList.remove('open');
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const profile = document.querySelector('.profile');
+        if (profile) profile.classList.remove('open');
+    }
+});
 
 // Load vouchers when page loads
 document.addEventListener('DOMContentLoaded', loadVouchers);

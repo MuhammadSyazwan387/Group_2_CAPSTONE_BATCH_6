@@ -530,4 +530,80 @@ body {
   .categories, .products, .about {
     padding: 40px 20px;
   }
+
+  /* Profile */
+.profile {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-pic {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #444;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.profile-pic:hover {
+  transform: scale(1.1);
+}
+
+/* Dropdown */
+.dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 8px;
+  background: #040005;
+  border-radius: 8px;
+  overflow: hidden;
+  min-width: 160px;
+  box-shadow: 0 4px 8px rgba(79, 41, 66, 0.4);
+  z-index: 1000;
+  border: 1px solid rgba(255, 77, 166, 0.2);
+}
+
+.dropdown a {
+  display: block;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #f4eef3;
+  transition: background 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.dropdown a:hover {
+  background: #fb34ab;
+  color: #f3edf0;
+}
+
+/* Show dropdown when hovering profile OR when it has 'open' class */
+.profile:hover .dropdown,
+.profile.open .dropdown {
+  display: block;
+}
+
+/* Add smooth animation */
+.dropdown {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.profile:hover .dropdown,
+.profile.open .dropdown {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+
 }
