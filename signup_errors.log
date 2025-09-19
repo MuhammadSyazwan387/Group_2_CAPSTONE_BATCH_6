@@ -27,3 +27,61 @@
 [15-Sep-2025 17:24:21 Europe/Berlin] Password hashed successfully
 [15-Sep-2025 17:24:21 Europe/Berlin] Attempting to insert user with email: dukun123@gmail.com
 [15-Sep-2025 17:24:21 Europe/Berlin] User inserted successfully with ID: 1
+[17-Sep-2025 12:31:36 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:31:36 Europe/Berlin] Database connection failed: SQLSTATE[HY000] [1049] Unknown database 'optima_bank'
+[17-Sep-2025 12:31:36 Europe/Berlin] Signup general error: Database 'optima_bank' does not exist. Please run init_database.php first.
+[17-Sep-2025 12:31:40 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:31:40 Europe/Berlin] Database connection failed: SQLSTATE[HY000] [1049] Unknown database 'optima_bank'
+[17-Sep-2025 12:31:40 Europe/Berlin] Signup general error: Database 'optima_bank' does not exist. Please run init_database.php first.
+[17-Sep-2025 12:32:51 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:32:51 Europe/Berlin] Database connection failed: SQLSTATE[HY000] [1049] Unknown database 'optima_bank'
+[17-Sep-2025 12:32:51 Europe/Berlin] Signup general error: Database 'optima_bank' does not exist. Please run init_database.php first.
+[17-Sep-2025 12:34:43 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:34:43 Europe/Berlin] Database connection failed: SQLSTATE[HY000] [1049] Unknown database 'optima_bank'
+[17-Sep-2025 12:34:43 Europe/Berlin] Signup general error: Database 'optima_bank' does not exist. Please run init_database.php first.
+[17-Sep-2025 12:34:49 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:34:49 Europe/Berlin] Database connection failed: SQLSTATE[HY000] [1049] Unknown database 'optima_bank'
+[17-Sep-2025 12:34:49 Europe/Berlin] Signup general error: Database 'optima_bank' does not exist. Please run init_database.php first.
+[17-Sep-2025 12:39:57 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:39:57 Europe/Berlin] Database connection failed: SQLSTATE[HY000] [1049] Unknown database 'optima_bank'
+[17-Sep-2025 12:39:57 Europe/Berlin] Signup general error: Database 'optima_bank' does not exist. Please run init_database.php first.
+[17-Sep-2025 12:41:36 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:41:36 Europe/Berlin] Database connection successful
+[17-Sep-2025 12:41:36 Europe/Berlin] Password hashed successfully
+[17-Sep-2025 12:41:36 Europe/Berlin] Attempting to insert user with email: abc123@gmail.com
+[17-Sep-2025 12:41:36 Europe/Berlin] Signup PDO error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'phone_number'
+[17-Sep-2025 12:41:46 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:41:46 Europe/Berlin] Database connection successful
+[17-Sep-2025 12:41:46 Europe/Berlin] Password hashed successfully
+[17-Sep-2025 12:41:46 Europe/Berlin] Attempting to insert user with email: abc123@gmail.com
+[17-Sep-2025 12:41:46 Europe/Berlin] Signup PDO error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'phone_number'
+[17-Sep-2025 12:42:32 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:42:33 Europe/Berlin] Database connection successful
+[17-Sep-2025 12:42:33 Europe/Berlin] Password hashed successfully
+[17-Sep-2025 12:42:33 Europe/Berlin] Attempting to insert user with email: abc123@gmail.com
+[17-Sep-2025 12:42:33 Europe/Berlin] Signup PDO error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'phone_number'
+[17-Sep-2025 12:43:02 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:43:02 Europe/Berlin] Database connection successful
+[17-Sep-2025 12:43:03 Europe/Berlin] Password hashed successfully
+[17-Sep-2025 12:43:03 Europe/Berlin] Attempting to insert user with email: abc123@gmail.com
+[17-Sep-2025 12:43:03 Europe/Berlin] Signup PDO error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'phone_number'
+[17-Sep-2025 12:43:13 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:43:13 Europe/Berlin] Database connection successful
+[17-Sep-2025 12:43:13 Europe/Berlin] Password hashed successfully
+[17-Sep-2025 12:43:13 Europe/Berlin] Attempting to insert user with email: abc123@gmail.com
+[17-Sep-2025 12:43:13 Europe/Berlin] Signup PDO error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'phone_number'
+[17-Sep-2025 12:43:58 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:43:58 Europe/Berlin] Database connection successful
+[17-Sep-2025 12:43:58 Europe/Berlin] Password hashed successfully
+[17-Sep-2025 12:43:58 Europe/Berlin] Attempting to insert user with email: abc123@gmail.com
+[17-Sep-2025 12:43:59 Europe/Berlin] Signup PDO error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'phone_number'
+[17-Sep-2025 12:44:07 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:44:07 Europe/Berlin] Database connection successful
+[17-Sep-2025 12:44:07 Europe/Berlin] Password hashed successfully
+[17-Sep-2025 12:44:07 Europe/Berlin] Attempting to insert user with email: abc123@gmail.com
+[17-Sep-2025 12:44:07 Europe/Berlin] Signup PDO error: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'phone_number'
+[17-Sep-2025 12:48:40 Europe/Berlin] Signup attempt - Input data: {"fullname":"Muhammad Syazwan","email":"abc123@gmail.com","password":"abc123","confirmPassword":"abc123"}
+[17-Sep-2025 12:48:40 Europe/Berlin] Database connection successful
+[17-Sep-2025 12:48:40 Europe/Berlin] Password hashed successfully
+[17-Sep-2025 12:48:40 Europe/Berlin] Attempting to insert user with email: abc123@gmail.com
+[17-Sep-2025 12:48:40 Europe/Berlin] User inserted successfully with ID: 14
