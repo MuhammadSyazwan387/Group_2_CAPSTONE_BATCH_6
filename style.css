@@ -151,6 +151,11 @@ body {
   display: block;
 }
 
+/* Allow dropdown to be opened via JS click toggle when parent has .open */
+.profile.open .dropdown {
+  display: block;
+}
+
 /* Hero Section */
 .hero {
   background: linear-gradient(135deg, #1a1a2e, #2b0f28, #3d0f2f);
