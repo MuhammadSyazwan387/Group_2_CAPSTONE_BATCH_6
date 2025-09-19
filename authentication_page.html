@@ -3,26 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PersolKelly - Login & Signup</title>
+    <title>Optima Bank - Login & Signup</title>
     <link rel="stylesheet" href="auth.css">
+    <!-- Google Sign-In API -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <div class="container">
         <!-- Left Hero Panel -->
         <div class="hero-panel">
             <div class="hero-content">
-                <h1 class="hero-title">AI Generative</h1>
-                <h2 class="hero-subtitle">Anything you can Imagine</h2>
-                <p class="hero-description">Generate anything or ask your requirements</p>
+                <h1 class="hero-title">Optima Banking</h1>
+                <h2 class="hero-subtitle">Your Financial Future</h2>
+                <p class="hero-description">Secure, modern banking solutions for all your needs</p>
             </div>
         </div>
 
         <!-- Right Form Panel -->
         <div class="form-panel">
             <div class="form-header">
-                <h2>Login your account</h2>
+                <h2>Access your account</h2>
                 <h1 id="formTitle">Welcome Back!</h1>
-                <p id="formSubtitle">Enter your email and password</p>
+                <p id="formSubtitle">Enter your credentials to continue</p>
             </div>
 
             <div class="form-toggle">
@@ -50,6 +52,7 @@
                 </div>
 
                 <button type="submit" class="submit-btn">Sign In</button>
+                  <a href="Homepage.html" onclick="showForgotPassword()">Forgot Password?</a>
 
                 <div class="divider">
                     <span>or continue with</span>

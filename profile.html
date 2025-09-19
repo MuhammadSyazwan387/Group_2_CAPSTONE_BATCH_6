@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Optima Bank - Profile</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<!-- Navbar (same as homepage) -->
+<header class="navbar">
+  <div class="logo">Optima<span>Bank</span></div>
+
+  <!-- Navigation Links -->
+  <nav class="nav-links">
+    <a href="homepage.html">Home</a>
+    <a href="#">About</a>
+    <a href="#">Shop</a>
+  </nav>
+
+  <!-- Search, Cart, Profile -->
+  <div class="nav-actions">
+    <div class="search-box">
+      <input type="text" placeholder="Search..." />
+      <button type="submit">🔍</button>
+    </div>
+
+    <div class="cart">
+      🛒
+      <span class="cart-count">0</span>
+    </div>
+
+    <div class="profile">
+      <img src="images/kfc_voucher_RM5.jpg" alt="Profile" class="profile-pic"/>
+      <div class="dropdown">
+        <a href="profile.html">My Profile</a>
+        <a href="#">Orders</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Profile Header -->
+<section class="hero" style="padding:40px 20px; text-align:left;">
+  <div class="hero-content" style="max-width:1000px; margin:0 auto; display:flex; gap:30px; align-items:center;">
+    <img src="images/placeholder.svg" alt="avatar" style="width:140px; height:140px; border-radius:12px; object-fit:cover; border:4px solid rgba(255,77,166,0.15);"/>
+    <div style="color:white;">
+      <h1 style="margin-bottom:6px;">Member Profile</h1>
+      <p style="color:#ccc; max-width:700px;">View and manage your account details, points balance and redeemed vouchers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Profile Details -->
+<section class="products" style="padding-top:30px; padding-bottom:30px;">
+  <div style="max-width:1000px; margin:0 auto; display:grid; grid-template-columns: 1fr 1fr; gap:30px;">
+
+    <!-- Left: Personal Info -->
+    <div class="product-card">
+      <h2>Personal Information</h2>
+      <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
+        <div><strong>Full name:</strong> <span id="full-name">John Doe</span></div>
+        <div><strong>Username:</strong> <span id="username">johndoe123</span></div>
+        <div><strong>Email:</strong> <span id="email">john.doe@example.com</span></div>
+        <div><strong>Address:</strong> <span id="address">123 Example Street, City, Country</span></div>
+      </div>
+      <div style="margin-top:20px; display:flex; gap:10px; align-items:center;">
+        <button class="btn primary">Edit Profile</button>
+        <button class="btn secondary">Change Password</button>
+      </div>
+    </div>
+
+    <!-- Right: Account Summary -->
+    <div class="product-card">
+      <h2>Account Summary</h2>
+      <div style="margin-top:10px; display:flex; flex-direction:column; gap:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;"><span>Points Balance</span><strong id="points">1,250</strong></div>
+        <div style="display:flex; justify-content:space-between; align-items:center;"><span>Vouchers Redeemed</span><strong id="redeemed-count">3</strong></div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <h3 style="margin-bottom:10px;">Recent Redeemed Vouchers</h3>
+        <div id="redeemed-list" style="display:flex; flex-direction:column; gap:12px;">
+          <!-- Example redeemed vouchers -->
+          <div style="display:flex; gap:12px; align-items:center;">
+            <img src="images/kfc_voucher_RM5.jpg" alt="kfc" style="width:60px; height:60px; border-radius:8px; object-fit:cover;"/>
+            <div>
+              <div style="font-weight:600;">KFC RM5 Voucher</div>
+              <div style="color:#ccc; font-size:0.9rem;">Redeemed: 2025-08-12</div>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:12px; align-items:center;">
+            <img src="images/tealive_voucher.jpg" alt="tealive" style="width:60px; height:60px; border-radius:8px; object-fit:cover;"/>
+            <div>
+              <div style="font-weight:600;">Tealive RM3 Voucher</div>
+              <div style="color:#ccc; font-size:0.9rem;">Redeemed: 2025-07-28</div>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:12px; align-items:center;">
+            <img src="images/zus_voucher.jpg" alt="zus" style="width:60px; height:60px; border-radius:8px; object-fit:cover;"/>
+            <div>
+              <div style="font-weight:600;">Zus Discount Voucher</div>
+              <div style="color:#ccc; font-size:0.9rem;">Redeemed: 2025-06-05</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full width: All redeemed vouchers table -->
+    <div style="grid-column:1 / -1;" class="product-card">
+      <h2>All Redeemed Vouchers</h2>
+      <div style="margin-top:10px; overflow:auto;">
+        <table style="width:100%; border-collapse:collapse; color:#fff;">
+          <thead>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
+              <th style="text-align:left; padding:12px 8px;">Voucher</th>
+              <th style="text-align:left; padding:12px 8px;">Code</th>
+              <th style="text-align:left; padding:12px 8px;">Redeemed On</th>
+              <th style="text-align:left; padding:12px 8px;">Status</th>
+            </tr>
+          </thead>
+          <tbody id="voucher-table-body">
+            <tr>
+              <td style="padding:12px 8px;">KFC RM5 Voucher</td>
+              <td style="padding:12px 8px;">KFC5OFF</td>
+              <td style="padding:12px 8px;">2025-08-12</td>
+              <td style="padding:12px 8px; color:#9ee6c0;">Used</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 8px;">Tealive RM3 Voucher</td>
+              <td style="padding:12px 8px;">TEA3</td>
+              <td style="padding:12px 8px;">2025-07-28</td>
+              <td style="padding:12px 8px; color:#9ee6c0;">Used</td>
+            </tr>
+            <tr>
+              <td style="padding:12px 8px;">Zus Discount Voucher</td>
+              <td style="padding:12px 8px;">ZUS10</td>
+              <td style="padding:12px 8px;">2025-06-05</td>
+              <td style="padding:12px 8px; color:#9ee6c0;">Used</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer (same as homepage) -->
+<footer class="footer">
+  <div class="footer-promo">
+    <h3>Get up to 50% off* voucher for your first order when you sign up for emails</h3>
+    <form class="signup-form">
+      <input type="email" placeholder="Enter email address" required />
+      <button type="submit" class="btn primary">SIGN UP</button>
+    </form>
+  </div>
+
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Online Store</h4>
+      <ul>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">Pages</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Home</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <p>Phone: 234 810 699 9825</p>
+      <p>Email: optimabankonlinestore@gmail.com</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Privacy Notice</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 Optima Bank. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// Placeholder: in a real app these would be fetched from the server
+document.addEventListener('DOMContentLoaded', function(){
+  // Example: you could replace these with values from server/session
+  document.getElementById('full-name').textContent = 'John Doe';
+  document.getElementById('username').textContent = 'johndoe123';
+  document.getElementById('email').textContent = 'john.doe@example.com';
+  document.getElementById('address').textContent = '123 Example Street, City, Country';
+  document.getElementById('points').textContent = '1,250';
+  document.getElementById('redeemed-count').textContent = '3';
+});
+
+// Profile dropdown: keep open on click, close on outside click or Escape
+document.addEventListener('click', function(e){
+  const profile = document.querySelector('.profile');
+  if (!profile) return;
+
+  if (profile.contains(e.target)) {
+    const isImage = e.target.closest('.profile-pic') || e.target.closest('.profile');
+    if (isImage) {
+      profile.classList.toggle('open');
+    }
+    return;
+  }
+
+  profile.classList.remove('open');
+});
+
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') {
+    const profile = document.querySelector('.profile');
+    if (profile) profile.classList.remove('open');
+  }
+});
+</script>
+
+</body>
+</html>
