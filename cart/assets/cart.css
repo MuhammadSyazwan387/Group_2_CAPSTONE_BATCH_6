@@ -22,7 +22,7 @@
 /* Cart Content */
 .cart-content {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 3fr 1fr;
   gap: 3rem;
   margin-top: 2rem;
 }
@@ -38,7 +38,7 @@
 
 .items-header {
   display: grid;
-  grid-template-columns: 1fr 100px 100px 100px;
+  grid-template-columns: 1fr 100px 70px 70px;
   gap: 0.5rem;
   padding: 1rem 0;
   border-bottom: 2px solid var(#ff4da6);
@@ -51,7 +51,7 @@
 
 .cart-item {
   display: grid;
-  grid-template-columns: 1fr 100px 100px 100px;
+  grid-template-columns: 1fr 100px 70px 70px;
   gap: 0.5rem;
   align-items: center;
   padding: 1.5rem 0;
@@ -66,8 +66,8 @@
 }
 
 .item-image {
-  width: 60px;
-  height: 60px;
+  width: 200px;
+  height: 100px;
   background: linear-gradient(45deg, #ff4da6, #3d0f2f);
   border-radius: 12px;
   display: flex;
@@ -78,6 +78,43 @@
   font-size: 1.2rem;
 }
 
+.quantity-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f9f9f947;
+  border-radius: 12px;
+  padding: 3px 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  width: fit-content;
+}
+
+.quantity-btn {
+  border: none;
+  background: #ff4da6;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.quantity-btn:hover {
+  background: #e04392;
+}
+
+.quantity-value {
+  min-width: 18px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ff4da6;
+}
+
+
 .item-info h3 {
   color: #ffffff;
   margin-bottom: 0.5rem;
@@ -87,7 +124,7 @@
 .item-points {
   text-align: center;
   font-weight: 600;
-  color: #ff4da6;
+  color: #ffffff;
 }
 
 .item-subtotal {
@@ -242,6 +279,7 @@
     text-align: center;
   }
 
+  .item-quantity,
   .item-points,
   .item-subtotal {
     display: flex;
@@ -252,6 +290,11 @@
     background: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     margin-top: 0.5rem;
+  }
+
+  .item-quantity::before {
+    content: "Quantity: ";
+    color: #ffffff;
   }
 
   .item-points::before {
@@ -275,7 +318,7 @@
   }
 
   .item-image {
-    width: 50px;
-    height: 50px;
+    width: 200px;
+    height: 120px;
   }
 }
