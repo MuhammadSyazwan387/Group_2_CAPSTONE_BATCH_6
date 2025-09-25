@@ -85,3 +85,9 @@
 [17-Sep-2025 12:48:40 Europe/Berlin] Password hashed successfully
 [17-Sep-2025 12:48:40 Europe/Berlin] Attempting to insert user with email: abc123@gmail.com
 [17-Sep-2025 12:48:40 Europe/Berlin] User inserted successfully with ID: 14
+[22-Sep-2025 15:33:41 UTC] Signup attempt - Input data: {"fullname":"NUR 'AINA BINTI YUSRILLHAFFIZ","email":"ainayusrill2706@gmail.com","password":"Aina1234","confirmPassword":"Aina1234"}
+[22-Sep-2025 15:33:41 UTC] Database connection failed: could not find driver
+[22-Sep-2025 15:33:41 UTC] Signup general error: Database connection failed: could not find driver
+[22-Sep-2025 15:33:45 UTC] Signup attempt - Input data: {"fullname":"NUR 'AINA BINTI YUSRILLHAFFIZ","email":"ainayusrill2706@gmail.com","password":"Aina1234","confirmPassword":"Aina1234"}
+[22-Sep-2025 15:33:45 UTC] Database connection failed: could not find driver
+[22-Sep-2025 15:33:45 UTC] Signup general error: Database connection failed: could not find driver
