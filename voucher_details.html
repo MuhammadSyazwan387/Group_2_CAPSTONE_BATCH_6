@@ -601,14 +601,16 @@
           });
 
           const data = await response.json();
-
           if (data.success) {
-            // ✅ Show success notification
-            showSuccess("Voucher redeemed successfully");
-          } else {
-            // ❌ Show error notification
-            showError(data.message || "Failed to redeem voucher");
-          }
+        showSuccess("Voucher redeemed successfully");
+        
+        // ⬇️ Redirect to download page after 1s
+        setTimeout(() => {
+          window.location.href = `./cart/api/download_voucher.php?voucher_id=${getVoucherIdFromUrl()}&user_id=${currentUserId}`;
+        }, 1000);
+      } else {
+        showError(data.message || "Failed to redeem voucher");
+      }
         } catch (error) {
           console.error("Error redeeming voucher:", error);
           showError("Error redeeming voucher");
