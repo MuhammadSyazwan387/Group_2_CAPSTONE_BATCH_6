@@ -5,34 +5,144 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Optima Bank - Homepage</title>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* Voucher Categories Section - FIXED SIZING AND ALIGNMENT */
+    .categories {
+      margin: 3rem auto 2rem auto;
+      max-width: 900px;
+      padding: 0 1rem;
+    }
+    .categories h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: #ffb4eb;
+      margin-bottom: 1.5rem;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      letter-spacing: 1px;
+    }
+    .category-grid-2rows {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+    }
+    .category-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 0;
+    }
+    .category-card {
+      background: #35003c;
+      color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 8px #0002;
+      width: 200px;
+      height: 110px;
+      font-size: 1.13rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.16s, box-shadow 0.16s;
+      font-weight: 500;
+      border: 2px solid #6824a8;
+      text-align: center;
+      font-family: inherit;
+      padding: 0.5rem;
+      box-sizing: border-box;
+      /* Prevent text wrapping awkwardly */
+      overflow: hidden;
+      white-space: normal;
+    }
+    .category-card span.icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+    .category-label {
+      font-size: 1.08rem;
+      line-height: 1.2;
+      word-break: break-word;
+      display: block;
+      /* Force two lines, center text vertically */
+      height: 2.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .category-card:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 6px 18px #44006670;
+      border-color: #ffb4eb;
+      background: #54005c;
+    }
+    .browse-btn-box {
+      text-align:center;
+      margin-top:2rem;
+    }
+    .btn.primary {
+      background: linear-gradient(90deg, #ffb4eb 40%, #6824a8 120%);
+      color: #35003c;
+      border: none;
+      border-radius: 24px;
+      padding: 0.8rem 2rem;
+      font-size: 1.13rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      margin-top: 0.5rem;
+    }
+    .btn.primary:hover {
+      background: linear-gradient(90deg, #6824a8 40%, #ffb4eb 120%);
+      color: #fff;
+    }
+    /* Responsive */
+    @media (max-width: 900px) {
+      .category-card {
+        width: 32vw;
+        min-width: 120px;
+        height: 100px;
+        font-size: 1rem;
+      }
+      .category-row {
+        gap: 1rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .category-row {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+      }
+      .category-card {
+        width: 90vw;
+        min-width: 120px;
+      }
+    }
+  </style>
 </head>
 <body>
 <!-- Navbar -->
 <header class="navbar">
   <div class="logo">Optima<span>Bank</span></div>
-
-  <!-- Navigation Links -->
   <nav class="nav-links">
     <a href="#" class="active">Home</a>
     <a href="#">About</a>
     <a href="#">Shop</a>
   </nav>
-
-  <!-- Search, Cart, Profile -->
   <div class="nav-actions">
-    <!-- Search -->
     <div class="search-box">
       <input type="text" placeholder="Search..." />
       <button type="submit">🔍</button>
     </div>
-
-    <!-- Cart -->
     <div class="cart">
       🛒
       <span class="cart-count">2</span>
     </div>
-
-    <!-- Profile -->
     <div class="profile">
       <img src="https://www.freepik.com/icon/profile_6878865" alt="Profile" class="profile-pic"/>
       <div class="dropdown">
@@ -64,16 +174,41 @@
   <div class="highlight-item">🚚 Always Deliver</div>
 </section>
 
-<!-- Categories -->
+<!-- Voucher Categories (PERFECT GRID) -->
 <section class="categories">
   <h2>Voucher Categories</h2>
-  <div class="category-grid">
-    <div class="category-card">Shopping</div>
-    <div class="category-card">Food & Dining</div>
-    <div class="category-card">Entertainment</div>
-    <div class="category-card">Gift Cards</div>
-    <div class="category-card">Travel</div>
-    <div class="category-card">Health & Wellness</div>
+  <div class="category-grid-2rows">
+    <div class="category-row">
+      <div class="category-card" onclick="window.location.href='category.php?category=Shopping'">
+        <span class="icon">🛍️</span>
+        <span class="category-label">Shopping</span>
+      </div>
+      <div class="category-card" onclick="window.location.href='category.php?category=Food%20%26%20Dining'">
+        <span class="icon">🍔</span>
+        <span class="category-label">Food & Dining</span>
+      </div>
+      <div class="category-card" onclick="window.location.href='category.php?category=Entertainment'">
+        <span class="icon">🎬</span>
+        <span class="category-label">Entertainment</span>
+      </div>
+    </div>
+    <div class="category-row">
+      <div class="category-card" onclick="window.location.href='category.php?category=Gift%20Cards'">
+        <span class="icon">🎁</span>
+        <span class="category-label">Gift Cards</span>
+      </div>
+      <div class="category-card" onclick="window.location.href='category.php?category=Travel'">
+        <span class="icon">✈️</span>
+        <span class="category-label">Travel</span>
+      </div>
+      <div class="category-card" onclick="window.location.href='category.php?category=Health%20%26%20Wellness'">
+        <span class="icon">💪</span>
+        <span class="category-label">Health & Wellness</span>
+      </div>
+    </div>
+  </div>
+  <div class="browse-btn-box">
+    <button class="btn primary" onclick="window.location.href='category.php'">Browse More Categories</button>
   </div>
 </section>
 
@@ -81,7 +216,6 @@
 <section class="products">
   <h2>Our Vouchers</h2>
   <div class="product-grid" id="voucher-grid">
-    <!-- Loading placeholder -->
     <div class="loading">Loading vouchers...</div>
   </div>
 </section>
@@ -98,7 +232,6 @@
 
 <!-- Footer -->
 <footer class="footer">
-  <!-- Promo Signup Section -->
   <div class="footer-promo">
     <h3>Get up to 50% off* voucher for your first order when you sign up for emails</h3>
     <form class="signup-form">
@@ -106,8 +239,6 @@
       <button type="submit" class="btn primary">SIGN UP</button>
     </form>
   </div>
-
-  <!-- Footer Links & Contact -->
   <div class="footer-grid">
     <div class="footer-col">
       <h4>Online Store</h4>
@@ -118,13 +249,11 @@
         <li><a href="#">Home</a></li>
       </ul>
     </div>
-
     <div class="footer-col">
       <h4>Contact Us</h4>
       <p>Phone: 234 810 699 9825</p>
       <p>Email: optimabankonlinestore@gmail.com</p>
     </div>
-
     <div class="footer-col">
       <h4>Company</h4>
       <ul>
@@ -134,76 +263,55 @@
       </ul>
     </div>
   </div>
-
-  <!-- Footer Bottom -->
   <div class="footer-bottom">
     <p>© 2025 Optima Bank. All rights reserved.</p>
   </div>
 </footer>
 
 <script>
-// Logout function
 function logout() {
     if (confirm('Are you sure you want to logout?')) {
         localStorage.removeItem('userLoggedIn');
         localStorage.removeItem('userEmail');
         localStorage.removeItem('userName');
         localStorage.removeItem('redeemedVouchers');
-        
         window.location.href = 'authentication_page.html';
     }
 }
-
-// Fetch and display vouchers
 async function loadVouchers() {
     try {
         console.log('Attempting to fetch vouchers...');
         const response = await fetch('voucher.php');
         console.log('Response status:', response.status);
-        
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
         const vouchers = await response.json();
         console.log('Vouchers data:', vouchers);
-        
         if (vouchers.error) {
             console.error('Database error:', vouchers.error);
             showError('Database error: ' + vouchers.error);
             return;
         }
-        
         const voucherGrid = document.getElementById('voucher-grid');
-        
-        // Clear loading text
         voucherGrid.innerHTML = '';
-        
-        // Check if we have vouchers
         if (!vouchers || vouchers.length === 0) {
             showError('No vouchers found in database');
             return;
         }
-        
-        // Display only first 3 vouchers (as per your requirement)
         vouchers.slice(0, 3).forEach(voucher => {
             const voucherCard = createVoucherCard(voucher);
             voucherGrid.appendChild(voucherCard);
         });
-        
     } catch (error) {
         console.error('Error loading vouchers:', error);
         showError('Error: ' + error.message);
     }
 }
-
 function createVoucherCard(voucher) {
     const card = document.createElement('div');
     card.className = 'product-card';
-    
-    // Log the image path for debugging
     console.log('Loading image:', voucher.image);
-    
     card.innerHTML = `
         <div class="image">
             <img src="${voucher.image}" alt="${voucher.title}" 
@@ -213,26 +321,18 @@ function createVoucherCard(voucher) {
         <h3>${voucher.title}</h3>
         <button class="btn small" onclick="viewVoucherDetails(${voucher.id})">View Details</button>
     `;
-    
     return card;
 }
-
 function viewVoucherDetails(voucherId) {
-    // Redirect to voucher details page with the voucher ID
     window.location.href = `voucher_details.html?id=${voucherId}`;
 }
-
 function showError(message) {
     const voucherGrid = document.getElementById('voucher-grid');
-    
     voucherGrid.innerHTML = '<div class="error">' + (message || 'Unable to load vouchers') + '</div>';
 }
-
-// Profile dropdown functionality
 document.addEventListener('click', function(e) {
     const profile = document.querySelector('.profile');
     if (!profile) return;
-
     if (profile.contains(e.target)) {
         const isProfileClick = e.target.closest('.profile-pic') || e.target.closest('.profile');
         if (isProfileClick) {
@@ -240,20 +340,15 @@ document.addEventListener('click', function(e) {
         }
         return;
     }
-
     profile.classList.remove('open');
 });
-
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         const profile = document.querySelector('.profile');
         if (profile) profile.classList.remove('open');
     }
 });
-
-// Load vouchers when page loads
 document.addEventListener('DOMContentLoaded', loadVouchers);
 </script>
-
 </body>
 </html>
