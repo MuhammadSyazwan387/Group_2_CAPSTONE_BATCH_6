@@ -1,4 +1,4 @@
-<?php
+ <?php
 // Handle AJAX request for vouchers by category
 if (isset($_GET['action']) && $_GET['action'] === 'get_vouchers') {
     $category = isset($_GET['category']) ? $_GET['category'] : '';
