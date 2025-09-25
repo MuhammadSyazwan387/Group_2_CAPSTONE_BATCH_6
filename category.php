@@ -1,32 +1,58 @@
 <?php
-// Handle AJAX request for vouchers by category
+// --- Database connection settings ---
+// Change these variables to match your actual database configuration
+$host = 'localhost';         // Database host
+$user = 'root';      // Database username
+$pass = '';  // Database password
+$dbname = 'optima_bank';    // Database name
+
+// Establish connection
+$conn = new mysqli($host, $user, $pass, $dbname);
+
+// Handle connection error
+if ($conn->connect_error) {
+    http_response_code(500);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Database connection failed']);
+    exit;
+}
+
+// --- Category name to ID mapping ---
+$category_map = [
+    'Food & Dining' => 1,
+    'Shopping' => 2,
+    'Entertainment' => 3,
+    'Gift Cards' => 4,
+    'Travel' => 5,
+    'Health & Wellness' => 6
+];
+
+// --- Handle AJAX request for vouchers by category ---
 if (isset($_GET['action']) && $_GET['action'] === 'get_vouchers') {
     $category = isset($_GET['category']) ? $_GET['category'] : '';
-    $all_vouchers = [
-        'Shopping' => [
-            ['id'=>1, 'title'=>'50% Off Zara', 'image'=>'images/zara.jpg'],
-            ['id'=>2, 'title'=>'RM100 Lazada Voucher', 'image'=>'images/lazada.jpg'],
-        ],
-        'Food & Dining' => [
-            ['id'=>3, 'title'=>'Free Tealive Drink', 'image'=>'images/tealive.png'],
-            ['id'=>4, 'title'=>'20% Off KFC', 'image'=>'images/kfc.png'],
-        ],
-        'Entertainment' => [
-            ['id'=>5, 'title'=>'Cinema Ticket', 'image'=>'images/cinema.jpg'],
-        ],
-        'Gift Cards' => [
-            ['id'=>6, 'title'=>'RM50 Gift Card', 'image'=>'images/giftcard.jpg'],
-        ],
-        'Travel' => [
-            ['id'=>7, 'title'=>'Hotel Discount', 'image'=>'images/hotel.jpg'],
-        ],
-        'Health & Wellness' => [
-            ['id'=>8, 'title'=>'Spa Voucher', 'image'=>'images/spa.jpg'],
-        ],
-    ];
-    $vouchers = $all_vouchers[$category] ?? [];
+    $category_id = isset($category_map[$category]) ? $category_map[$category] : null;
+
+    $vouchers = [];
+    if ($category_id !== null) {
+        // Modify the fields fetched here if you want to show more info!
+        $stmt = $conn->prepare("SELECT id, title, image FROM VOUCHER WHERE category_id = ?");
+        $stmt->bind_param("i", $category_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $vouchers[] = [
+                'id' => $row['id'],
+                'title' => $row['title'],
+                'image' => $row['image']
+            ];
+        }
+        $stmt->close();
+    }
+
     header('Content-Type: application/json');
     echo json_encode($vouchers);
+    $conn->close();
     exit;
 }
 ?>
