@@ -34,9 +34,9 @@
       <img src="images/kfc_voucher_RM5.jpg" alt="Profile" class="profile-pic"/>
       <div class="dropdown">
         <a href="profile.html">My Profile</a>
-        <a href="#">Orders</a>
-        <a href="#">Settings</a>
-        <a href="#">Logout</a>
+        <a href="./cart/cart.html">Cart</a>
+        <a href="./cart/cart-history.html">Cart History</a>
+        <a href="#" onclick="logout()">Logout</a>
       </div>
     </div>
   </div>
@@ -227,6 +227,16 @@ document.addEventListener('keydown', function(e){
     if (profile) profile.classList.remove('open');
   }
 });
+
+function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('userLoggedIn');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('redeemedVouchers');
+        window.location.href = 'authentication_page.html';
+      }
+    }
 </script>
 
 </body>
