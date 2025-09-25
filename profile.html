@@ -30,13 +30,13 @@
       <span class="cart-count">0</span>
     </div>
 
-    <div class="profile">
-      <img src="images/kfc_voucher_RM5.jpg" alt="Profile" class="profile-pic"/>
+    <div class="profile" id="profileMenu">
+      <img src="images/placeholder.svg" alt="Profile" class="profile-pic" id="profileAvatar" />
       <div class="dropdown">
         <a href="profile.html">My Profile</a>
         <a href="#">Orders</a>
         <a href="#">Settings</a>
-        <a href="#">Logout</a>
+        <a href="#" id="logoutLink">Logout</a>
       </div>
     </div>
   </div>
@@ -47,8 +47,8 @@
   <div class="hero-content" style="max-width:1000px; margin:0 auto; display:flex; gap:30px; align-items:center;">
     <img src="images/placeholder.svg" alt="avatar" style="width:140px; height:140px; border-radius:12px; object-fit:cover; border:4px solid rgba(255,77,166,0.15);"/>
     <div style="color:white;">
-      <h1 style="margin-bottom:6px;">Member Profile</h1>
-      <p style="color:#ccc; max-width:700px;">View and manage your account details, points balance and redeemed vouchers.</p>
+  <h1 id="profileHeading" style="margin-bottom:6px;">Member Profile</h1>
+  <p id="profileTagline" style="color:#ccc; max-width:700px;">View and manage your account details, points balance and redeemed vouchers.</p>
     </div>
   </div>
 </section>
@@ -64,12 +64,15 @@
         <div><strong>Full name:</strong> <span id="full-name">John Doe</span></div>
         <div><strong>Username:</strong> <span id="username">johndoe123</span></div>
         <div><strong>Email:</strong> <span id="email">john.doe@example.com</span></div>
+        <div><strong>Phone:</strong> <span id="phone-number">-</span></div>
         <div><strong>Address:</strong> <span id="address">123 Example Street, City, Country</span></div>
+        <div><strong>About:</strong> <span id="about-me">—</span></div>
       </div>
       <div style="margin-top:20px; display:flex; gap:10px; align-items:center;">
-        <button class="btn primary">Edit Profile</button>
-        <button class="btn secondary">Change Password</button>
+        <button class="btn primary" id="openEditProfile">Edit Profile</button>
+        <button class="btn secondary" id="openChangePassword">Change Password</button>
       </div>
+      <p class="form-message" id="profileStatus" style="margin-top:15px;"></p>
     </div>
 
     <!-- Right: Account Summary -->
@@ -82,31 +85,8 @@
 
       <div style="margin-top:20px;">
         <h3 style="margin-bottom:10px;">Recent Redeemed Vouchers</h3>
-        <div id="redeemed-list" style="display:flex; flex-direction:column; gap:12px;">
-          <!-- Example redeemed vouchers -->
-          <div style="display:flex; gap:12px; align-items:center;">
-            <img src="images/kfc_voucher_RM5.jpg" alt="kfc" style="width:60px; height:60px; border-radius:8px; object-fit:cover;"/>
-            <div>
-              <div style="font-weight:600;">KFC RM5 Voucher</div>
-              <div style="color:#ccc; font-size:0.9rem;">Redeemed: 2025-08-12</div>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:12px; align-items:center;">
-            <img src="images/tealive_voucher.jpg" alt="tealive" style="width:60px; height:60px; border-radius:8px; object-fit:cover;"/>
-            <div>
-              <div style="font-weight:600;">Tealive RM3 Voucher</div>
-              <div style="color:#ccc; font-size:0.9rem;">Redeemed: 2025-07-28</div>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:12px; align-items:center;">
-            <img src="images/zus_voucher.jpg" alt="zus" style="width:60px; height:60px; border-radius:8px; object-fit:cover;"/>
-            <div>
-              <div style="font-weight:600;">Zus Discount Voucher</div>
-              <div style="color:#ccc; font-size:0.9rem;">Redeemed: 2025-06-05</div>
-            </div>
-          </div>
+        <div id="redeemed-list" class="redeemed-list">
+          <p class="empty-state">No vouchers redeemed yet.</p>
         </div>
       </div>
     </div>
@@ -126,22 +106,7 @@
           </thead>
           <tbody id="voucher-table-body">
             <tr>
-              <td style="padding:12px 8px;">KFC RM5 Voucher</td>
-              <td style="padding:12px 8px;">KFC5OFF</td>
-              <td style="padding:12px 8px;">2025-08-12</td>
-              <td style="padding:12px 8px; color:#9ee6c0;">Used</td>
-            </tr>
-            <tr>
-              <td style="padding:12px 8px;">Tealive RM3 Voucher</td>
-              <td style="padding:12px 8px;">TEA3</td>
-              <td style="padding:12px 8px;">2025-07-28</td>
-              <td style="padding:12px 8px; color:#9ee6c0;">Used</td>
-            </tr>
-            <tr>
-              <td style="padding:12px 8px;">Zus Discount Voucher</td>
-              <td style="padding:12px 8px;">ZUS10</td>
-              <td style="padding:12px 8px;">2025-06-05</td>
-              <td style="padding:12px 8px; color:#9ee6c0;">Used</td>
+              <td colspan="4" class="table-empty">No voucher redemptions yet.</td>
             </tr>
           </tbody>
         </table>
@@ -150,6 +115,56 @@
 
   </div>
 </section>
+
+<!-- Modals -->
+<div class="modal" id="editProfileModal">
+  <div class="modal-content">
+    <button class="modal-close" data-close="editProfileModal" aria-label="Close edit profile modal">&times;</button>
+    <h3>Edit Profile</h3>
+    <form id="editProfileForm">
+      <label for="editFullName">Full Name</label>
+      <input type="text" id="editFullName" name="fullname" required />
+
+      <label for="editPhone">Phone Number</label>
+      <input type="tel" id="editPhone" name="phone_number" placeholder="e.g. +60123456789" />
+
+      <label for="editAddress">Address</label>
+      <textarea id="editAddress" name="address" rows="3" placeholder="Home or mailing address"></textarea>
+
+      <label for="editAbout">About Me</label>
+      <textarea id="editAbout" name="about_me" rows="3" placeholder="Tell us about yourself"></textarea>
+
+      <div class="modal-actions">
+        <button type="button" class="btn secondary" data-close="editProfileModal">Cancel</button>
+        <button type="submit" class="btn primary">Save Changes</button>
+      </div>
+      <p class="form-message" id="editProfileMessage"></p>
+    </form>
+  </div>
+</div>
+
+<div class="modal" id="changePasswordModal">
+  <div class="modal-content">
+    <button class="modal-close" data-close="changePasswordModal" aria-label="Close change password modal">&times;</button>
+    <h3>Change Password</h3>
+    <form id="changePasswordForm">
+      <label for="currentPassword">Current Password</label>
+      <input type="password" id="currentPassword" name="current_password" placeholder="Current password" />
+
+      <label for="newPassword">New Password</label>
+      <input type="password" id="newPassword" name="new_password" minlength="6" required />
+
+      <label for="confirmPassword">Confirm New Password</label>
+      <input type="password" id="confirmPassword" name="confirm_password" minlength="6" required />
+
+      <div class="modal-actions">
+        <button type="button" class="btn secondary" data-close="changePasswordModal">Cancel</button>
+        <button type="submit" class="btn primary">Update Password</button>
+      </div>
+      <p class="form-message" id="changePasswordMessage"></p>
+    </form>
+  </div>
+</div>
 
 <!-- Footer (same as homepage) -->
 <footer class="footer">
@@ -194,38 +209,456 @@
 </footer>
 
 <script>
-// Placeholder: in a real app these would be fetched from the server
-document.addEventListener('DOMContentLoaded', function(){
-  // Example: you could replace these with values from server/session
-  document.getElementById('full-name').textContent = 'John Doe';
-  document.getElementById('username').textContent = 'johndoe123';
-  document.getElementById('email').textContent = 'john.doe@example.com';
-  document.getElementById('address').textContent = '123 Example Street, City, Country';
-  document.getElementById('points').textContent = '1,250';
-  document.getElementById('redeemed-count').textContent = '3';
-});
+const DEFAULT_AVATAR = 'images/placeholder.svg';
+const DROPDOWN_DELAY = 1000;
 
-// Profile dropdown: keep open on click, close on outside click or Escape
-document.addEventListener('click', function(e){
-  const profile = document.querySelector('.profile');
-  if (!profile) return;
+let profileData = null;
+let dropdownTimeoutId;
 
-  if (profile.contains(e.target)) {
-    const isImage = e.target.closest('.profile-pic') || e.target.closest('.profile');
-    if (isImage) {
-      profile.classList.toggle('open');
-    }
+function formatDate(dateString) {
+  if (!dateString) {
+    return '—';
+  }
+
+  const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) {
+    return dateString;
+  }
+
+  return date.toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+}
+
+function deriveUsername(email, fallback = '—') {
+  if (!email) {
+    return fallback;
+  }
+
+  const atIndex = email.indexOf('@');
+  if (atIndex > 0) {
+    return email.substring(0, atIndex);
+  }
+
+  return email;
+}
+
+function setFormMessage(elementId, message, type = '') {
+  const element = document.getElementById(elementId);
+  if (!element) {
     return;
   }
 
-  profile.classList.remove('open');
-});
+  element.textContent = message;
+  element.className = type ? `form-message ${type}` : 'form-message';
+}
 
-document.addEventListener('keydown', function(e){
-  if (e.key === 'Escape') {
-    const profile = document.querySelector('.profile');
-    if (profile) profile.classList.remove('open');
+function renderRecentRedeemed(list) {
+  const container = document.getElementById('redeemed-list');
+  if (!container) {
+    return;
   }
+
+  container.innerHTML = '';
+
+  if (!list || list.length === 0) {
+    container.innerHTML = '<p class="empty-state">No vouchers redeemed yet.</p>';
+    return;
+  }
+
+  list.forEach((item) => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'redeemed-item';
+
+    const icon = document.createElement('div');
+    icon.className = 'redeemed-icon';
+    icon.textContent = (item.title || '?').charAt(0).toUpperCase();
+
+    const details = document.createElement('div');
+    details.className = 'redeemed-details';
+    details.innerHTML = `
+      <div class="redeemed-title">${item.title || 'Voucher'}</div>
+      <div class="redeemed-date">Redeemed: ${formatDate(item.completed_date)}${item.quantity > 1 ? ` • Qty ${item.quantity}` : ''}</div>
+    `;
+
+    wrapper.append(icon, details);
+    container.appendChild(wrapper);
+  });
+}
+
+function renderRedeemedHistory(list) {
+  const tableBody = document.getElementById('voucher-table-body');
+  if (!tableBody) {
+    return;
+  }
+
+  tableBody.innerHTML = '';
+
+  if (!list || list.length === 0) {
+    const emptyRow = document.createElement('tr');
+    emptyRow.innerHTML = '<td colspan="4" class="table-empty">No voucher redemptions yet.</td>';
+    tableBody.appendChild(emptyRow);
+    return;
+  }
+
+  list.forEach((item) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td style="padding:12px 8px;">${item.title || 'Voucher'}</td>
+      <td style="padding:12px 8px;">${item.quantity > 1 ? `${item.quantity} items` : '—'}</td>
+      <td style="padding:12px 8px;">${formatDate(item.completed_date)}</td>
+      <td style="padding:12px 8px;" class="status success">Redeemed</td>
+    `;
+    tableBody.appendChild(row);
+  });
+}
+
+function populateProfile(data) {
+  if (!data) {
+    return;
+  }
+
+  profileData = {
+    ...(profileData || {}),
+    ...data
+  };
+
+  const fullNameEl = document.getElementById('full-name');
+  if (fullNameEl) {
+    fullNameEl.textContent = data.fullname || '—';
+  }
+
+  const usernameEl = document.getElementById('username');
+  if (usernameEl) {
+    usernameEl.textContent = deriveUsername(data.email, data.fullname || '—');
+  }
+
+  const emailEl = document.getElementById('email');
+  if (emailEl) {
+    emailEl.textContent = data.email || '—';
+  }
+
+  const phoneEl = document.getElementById('phone-number');
+  if (phoneEl) {
+    phoneEl.textContent = data.phone_number || '—';
+  }
+
+  const addressEl = document.getElementById('address');
+  if (addressEl) {
+    addressEl.textContent = data.address || '—';
+  }
+
+  const aboutEl = document.getElementById('about-me');
+  if (aboutEl) {
+    aboutEl.textContent = data.about_me || '—';
+  }
+
+  const pointsEl = document.getElementById('points');
+  if (pointsEl) {
+    const points = Number(data.points || 0);
+    pointsEl.textContent = points.toLocaleString();
+  }
+
+  const redeemedEl = document.getElementById('redeemed-count');
+  if (redeemedEl) {
+    redeemedEl.textContent = Number(data.redeemed_total || 0).toLocaleString();
+  }
+
+  const headingEl = document.getElementById('profileHeading');
+  if (headingEl) {
+    headingEl.textContent = data.fullname ? `${data.fullname}'s Profile` : 'Member Profile';
+  }
+
+  const taglineEl = document.getElementById('profileTagline');
+  if (taglineEl) {
+    const createdAt = data.created_at ? formatDate(data.created_at) : null;
+    taglineEl.textContent = createdAt ? `Member since ${createdAt}. Manage your account details, points, and vouchers here.` : 'View and manage your account details, points balance and redeemed vouchers.';
+  }
+
+  const avatarEl = document.getElementById('profileAvatar');
+  if (avatarEl) {
+    if (data.profile_image) {
+      avatarEl.src = data.profile_image;
+    } else {
+      avatarEl.src = DEFAULT_AVATAR;
+    }
+  }
+
+  renderRecentRedeemed(data.redeemed_recent || []);
+  renderRedeemedHistory(data.redeemed_history || []);
+}
+
+async function loadProfile(userId) {
+  const statusEl = document.getElementById('profileStatus');
+  setFormMessage('profileStatus', 'Loading profile...', 'info');
+
+  try {
+    const response = await fetch('profile_get.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ user_id: Number(userId) })
+    });
+
+    const payload = await response.json();
+
+    if (!response.ok || !payload.success) {
+      throw new Error(payload.message || 'Unable to load profile.');
+    }
+
+    populateProfile(payload.data);
+    setFormMessage('profileStatus', 'Profile loaded successfully.', 'success');
+
+    setTimeout(() => {
+      setFormMessage('profileStatus', '', '');
+    }, 1200);
+  } catch (error) {
+    console.error('Profile load error:', error);
+    setFormMessage('profileStatus', error.message || 'Failed to load profile.', 'error');
+  }
+}
+
+function openModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) {
+    modal.classList.add('show');
+  }
+}
+
+function closeModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) {
+    modal.classList.remove('show');
+  }
+}
+
+function handleLogout() {
+  localStorage.removeItem('userLoggedIn');
+  localStorage.removeItem('userId');
+  localStorage.removeItem('userEmail');
+  localStorage.removeItem('userName');
+  localStorage.removeItem('userPoints');
+  localStorage.removeItem('redeemedVouchers');
+
+  window.location.href = 'authentication_page.html';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const userLoggedIn = localStorage.getItem('userLoggedIn');
+  const userId = localStorage.getItem('userId');
+
+  if (userLoggedIn !== 'true' || !userId) {
+    window.location.href = 'authentication_page.html';
+    return;
+  }
+
+  const profileMenu = document.getElementById('profileMenu');
+  const dropdown = profileMenu ? profileMenu.querySelector('.dropdown') : null;
+
+  if (dropdown) {
+    dropdown.style.display = 'none';
+  }
+
+  if (profileMenu && dropdown) {
+    const showDropdown = () => {
+      clearTimeout(dropdownTimeoutId);
+      dropdown.style.display = 'block';
+    };
+
+    const scheduleHideDropdown = () => {
+      clearTimeout(dropdownTimeoutId);
+      dropdownTimeoutId = setTimeout(() => {
+        dropdown.style.display = 'none';
+      }, DROPDOWN_DELAY);
+    };
+
+    profileMenu.addEventListener('mouseenter', showDropdown);
+    profileMenu.addEventListener('mouseleave', scheduleHideDropdown);
+    dropdown.addEventListener('mouseenter', showDropdown);
+    dropdown.addEventListener('mouseleave', scheduleHideDropdown);
+
+    document.addEventListener('click', (event) => {
+      if (!profileMenu.contains(event.target)) {
+        dropdown.style.display = 'none';
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        dropdown.style.display = 'none';
+      }
+    });
+  }
+
+  const logoutLink = document.getElementById('logoutLink');
+  if (logoutLink) {
+    logoutLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      handleLogout();
+    });
+  }
+
+  const editButton = document.getElementById('openEditProfile');
+  const editForm = document.getElementById('editProfileForm');
+  if (editButton && editForm) {
+    editButton.addEventListener('click', () => {
+      if (!profileData) {
+        return;
+      }
+
+      editForm.reset();
+
+      document.getElementById('editFullName').value = profileData.fullname || '';
+      document.getElementById('editPhone').value = profileData.phone_number || '';
+      document.getElementById('editAddress').value = profileData.address || '';
+      document.getElementById('editAbout').value = profileData.about_me || '';
+
+      setFormMessage('editProfileMessage', '', '');
+      openModal('editProfileModal');
+    });
+
+    editForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!profileData) {
+        return;
+      }
+
+      const formData = new FormData(editForm);
+      const payload = {
+        user_id: Number(profileData.id),
+        fullname: formData.get('fullname'),
+        phone_number: formData.get('phone_number') || '',
+        address: formData.get('address') || '',
+        about_me: formData.get('about_me') || ''
+      };
+
+      if (!payload.fullname || payload.fullname.trim() === '') {
+        setFormMessage('editProfileMessage', 'Full name is required.', 'error');
+        return;
+      }
+
+      setFormMessage('editProfileMessage', 'Saving changes...', 'info');
+
+      try {
+        const response = await fetch('profile_update.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || 'Unable to update profile.');
+        }
+
+        setFormMessage('editProfileMessage', 'Profile updated successfully.', 'success');
+
+        if (data.data) {
+          populateProfile({ ...profileData, ...data.data });
+        } else {
+          await loadProfile(profileData.id);
+        }
+
+        setTimeout(() => {
+          closeModal('editProfileModal');
+        }, 700);
+      } catch (error) {
+        console.error('Profile update error:', error);
+        setFormMessage('editProfileMessage', error.message || 'Failed to update profile.', 'error');
+      }
+    });
+  }
+
+  const changePasswordButton = document.getElementById('openChangePassword');
+  const changePasswordForm = document.getElementById('changePasswordForm');
+  if (changePasswordButton && changePasswordForm) {
+    changePasswordButton.addEventListener('click', () => {
+      changePasswordForm.reset();
+      setFormMessage('changePasswordMessage', '', '');
+      openModal('changePasswordModal');
+    });
+
+    changePasswordForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!profileData) {
+        return;
+      }
+
+      const formData = new FormData(changePasswordForm);
+      const newPassword = formData.get('new_password') || '';
+      const confirmPassword = formData.get('confirm_password') || '';
+
+      if (newPassword.length < 6) {
+        setFormMessage('changePasswordMessage', 'Password must be at least 6 characters long.', 'error');
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        setFormMessage('changePasswordMessage', 'New password and confirmation do not match.', 'error');
+        return;
+      }
+
+      const payload = {
+        user_id: Number(profileData.id),
+        current_password: formData.get('current_password') || '',
+        new_password: newPassword,
+        confirm_password: confirmPassword
+      };
+
+      setFormMessage('changePasswordMessage', 'Updating password...', 'info');
+
+      try {
+        const response = await fetch('profile_change_password.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || 'Unable to update password.');
+        }
+
+        setFormMessage('changePasswordMessage', 'Password updated successfully.', 'success');
+        changePasswordForm.reset();
+
+        setTimeout(() => {
+          closeModal('changePasswordModal');
+        }, 700);
+      } catch (error) {
+        console.error('Password update error:', error);
+        setFormMessage('changePasswordMessage', error.message || 'Failed to update password.', 'error');
+      }
+    });
+  }
+
+  document.querySelectorAll('[data-close]').forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
+      const targetId = event.currentTarget.getAttribute('data-close');
+      if (targetId) {
+        closeModal(targetId);
+      }
+    });
+  });
+
+  document.querySelectorAll('.modal').forEach((modal) => {
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        closeModal(modal.id);
+      }
+    });
+  });
+
+  loadProfile(userId);
 });
 </script>
 
