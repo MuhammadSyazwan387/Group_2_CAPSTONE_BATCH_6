@@ -138,6 +138,7 @@ try {
         // Send success response with checkout details
         closeConnection($db);
         sendResponse(true, 'Checkout completed successfully', [
+            'voucher_id' => $order_items[0]['voucher_id'],
             'total_items' => count($order_items),
             'total_points' => $total_points,
             'items' => $order_items,

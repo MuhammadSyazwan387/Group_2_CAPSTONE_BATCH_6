@@ -1,30 +1,14 @@
 // Global variables for cart management
 let currentUserId = localStorage.userId; // This should be set dynamically from your PHP session
+if (!currentUserId) {
+  window.location.href = "../authentication_page.html";
+}
 let cartItems = new Map(); // Store cart items in memory for faster updates
 
 // Initialize cart on page load
 document.addEventListener("DOMContentLoaded", function () {
   loadCartItems();
-  fetchUserProfile();
 });
-
-// fetch user profile
-async function fetchUserProfile() {
-  try {
-    const res = await fetch("../get_user.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id: currentUserId }),
-    });
-    if (!res.ok) throw new Error("Failed to fetch profile");
-    const user = await res.json();
-
-
-    document.getElementById("profile-pic").src = '../' + user.data.profile_image || "images/placeholder.svg";
-  } catch (err) {
-    console.error(err);
-  }
-}
 
 // Load cart items from database
 async function loadCartItems() {
@@ -79,12 +63,10 @@ function createCartItemElement(item) {
 
   cartItem.innerHTML = `
                 <div class="item-details">
-                    <button class="remove-btn" data-item-id="${
-                      item.id
-                    }">×</button>
-                    <div class="item-image" style="background-image: url('../${
-                      item.image_url
-                    }');background-size: cover;">V</div>
+                    <button class="remove-btn" data-item-id="${item.id
+    }">×</button>
+                    <div class="item-image" style="background-image: url('../${item.image_url
+    }');background-size: cover;">V</div>
                     <div class="item-info">
                         <h3>${item.voucher_name || "Voucher Name"}</h3>
                     </div>
@@ -99,9 +81,8 @@ function createCartItemElement(item) {
                 </div>
 
                 <div class= "item-points">
-                <div class="item-points-required" style="text-align: center;">${
-                  item.points_required
-                }</div> 
+                <div class="item-points-required" style="text-align: center;">${item.points_required
+    }</div> 
                 </div>
                 
                 <div class="item-subtotal">${calculateSubtotal(item)}</div>
@@ -300,9 +281,9 @@ document
       }
 
       console.log(JSON.stringify({
-          user_id: currentUserId,
-          updates: updates,
-        }));
+        user_id: currentUserId,
+        updates: updates,
+      }));
 
       const response = await fetch("api/update_cart.php", {
         method: "POST",
@@ -363,26 +344,22 @@ document
       }
 
       try {
-        const response = await fetch("api/checkout.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            user_id: currentUserId,
-          }),
-        });
-
-        const data = await response.json();
-        if (data.success) {
-          showSuccess("Redeemed successfully!");
+        // Single step: backend will finalize checkout and stream the PDF
+        showSuccess("Processing redemption...");
+        setTimeout(() => {
+          const url = `./api/download_voucher.php?user_id=${encodeURIComponent(currentUserId)}`;
+          // Trigger download in a new tab
+          const link = document.createElement('a');
+          link.href = url;
+          link.target = '_blank';
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          // Redirect current page to homepage shortly after
           setTimeout(() => {
-            window.location.href =
-              "../homepage.html";
-          }, 1000);
-        } else {
-          showError(data.message || "Checkout failed");
-        }
+            window.location.href = "../homepage.html";
+          }, 800);
+        }, 600);
       } catch (error) {
         console.error("Error during checkout:", error);
         showError("Error during checkout");
@@ -482,8 +459,3 @@ document.addEventListener("keydown", function (e) {
     if (profile) profile.classList.remove("open");
   }
 });
-
-function toggleMenu() {
-  document.querySelector(".nav-links").classList.toggle("active");
-  document.querySelector(".nav-actions").classList.toggle("disactive");
-}
