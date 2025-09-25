@@ -45,7 +45,23 @@ try {
 
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Return response
+    $profileImage = $user['profile_image'] ?? null;
+    $imageUrl = null;
+
+    if (!empty($profileImage)) {
+        if (is_string($profileImage) && preg_match('/^data:image\//i', $profileImage)) {
+            $imageUrl = $profileImage;
+        } elseif (is_string($profileImage) && preg_match('/\.(png|jpe?g|gif|webp)$/i', $profileImage)) {
+            $imageUrl = $profileImage;
+        } elseif (is_string($profileImage) && ctype_print($profileImage)) {
+            $imageUrl = $profileImage;
+        } else {
+            $imageUrl = 'data:image/jpeg;base64,' . base64_encode($profileImage);
+        }
+    }
+
+    $user['profile_image'] = $imageUrl;
+
     echo json_encode([
         "success" => true,
         "message" => "User information fetched successfully",
