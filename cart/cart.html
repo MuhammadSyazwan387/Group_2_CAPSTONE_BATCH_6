@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optima Bank - Cart</title>
+    <link rel="icon" type="image/x-icon" href="../images/optima_bank_logo.png">
+    <link rel="stylesheet" href="assets/cart.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Optima<span>Bank</span></div>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+            <a href="../homepage.html">Home</a>
+            <a href="#">About</a>
+            <a href="#">Shop</a>
+        </nav>
+
+        <!-- Search, Cart, Profile -->
+        <div class="nav-actions">
+            <!-- Search -->
+            <div class="search-box">
+                <input type="text" placeholder="Search..." />
+                <button type="submit">🔍</button>
+            </div>
+
+            <!-- Cart -->
+            <div class="cart">
+                <a href="cart.html">
+                    🛒
+                    <span class="cart-count">2</span>
+                </a>
+            </div>
+
+            <!-- Profile -->
+            <div class="profile">
+                <img src="https://www.freepik.com/icon/profile_6878865" alt="Profile" class="profile-pic" />
+                <div class="dropdown">
+                    <a href="profile.html">My Account</a>
+                    <a href="#">Orders</a>
+                    <a href="#">Settings</a>
+                    <a href="#" onclick="logout()">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Cart Header -->
+        <div class="cart-header">
+            <h1 class="cart-title">Cart</h1>
+        </div>
+
+        <!-- Cart Content -->
+        <div class="cart-content">
+            <!-- Cart Items -->
+            <div class="cart-items">
+                <div class="items-header">
+                    <div>VOUCHER</div>
+                    <div>QUANTITY</div>
+                    <div>POINTS</div>
+                    <div>SUBTOTAL</div>
+                </div>
+
+                <div class="cart-item">
+                    <div class="item-details">
+                        <button class="remove-btn">×</button>
+                        <div class="item-image">V</div>
+                        <div class="item-info">
+                            <h3>Voucher Name</h3>
+                        </div>
+                    </div>
+                    <div class="item-quantity">1</div>
+                    <div class="item-points">1000</div>
+                    <div class="item-subtotal">10000</div>
+                </div>
+
+                <div class="cart-item">
+                    <div class="item-details">
+                        <button class="remove-btn">×</button>
+                        <div class="item-image">V</div>
+                        <div class="item-info">
+                            <h3>Voucher Name</h3>
+                        </div>
+                    </div>
+                    <div class="item-quantity">1</div>
+                    <div class="item-points">1000</div>
+                    <div class="item-subtotal">10000</div>
+                </div>
+
+                <div class="cart-item">
+                    <div class="item-details">
+                        <button class="remove-btn">×</button>
+                        <div class="item-image">V</div>
+                        <div class="item-info">
+                            <h3>Voucher Name</h3>
+                        </div>
+                    </div>
+                    <div class="item-quantity">1</div>
+                    <div class="item-points">1000</div>
+                    <div class="item-subtotal">10000</div>
+                </div>
+
+                <div class="cart-item">
+                    <div class="item-details">
+                        <button class="remove-btn">×</button>
+                        <div class="item-image">V</div>
+                        <div class="item-info">
+                            <h3>Voucher Name</h3>
+                        </div>
+                    </div>
+                    <div class="item-quantity">1</div>
+                    <div class="item-points">1000</div>
+                    <div class="item-subtotal">10000</div>
+                </div>
+
+                <button class="update-cart-btn">UPDATE CART</button>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="cart-summary">
+                <h2 class="summary-title">Cart Totals</h2>
+
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span>40000</span>
+                </div>
+
+                <button class="checkout-btn">PROCEED TO REDEEM</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <!-- Footer Links & Contact -->
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Online Store</h4>
+                <ul>
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="#">Pages</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Home</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <p>Phone: 234 810 699 9825</p>
+                <p>Email: optimabankonlinestore@gmail.com</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Privacy Notice</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p>© 2025 Optima Bank. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="assets/cart.js"></script>
+</body>
+
+</html>
