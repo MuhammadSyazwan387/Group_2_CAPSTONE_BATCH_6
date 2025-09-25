@@ -436,7 +436,7 @@ function logout() {
     localStorage.removeItem("userName");
     localStorage.removeItem("redeemedVouchers");
 
-    window.location.href = "authentication_page.html";
+    window.location.href = "../authentication_page.html";
   }
 }
 

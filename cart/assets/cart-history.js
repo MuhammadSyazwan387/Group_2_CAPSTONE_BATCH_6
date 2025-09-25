@@ -1,5 +1,5 @@
 // Global variables
-let currentUserId = 1; // Should be set dynamically from your PHP session
+let currentUserId = localStorage.userId; 
 let historyItems = [];
 let filteredItems = [];
 
@@ -201,7 +201,7 @@ function filterItems() {
 // Clear history
 async function clearHistory() {
   try {
-    const response = await fetch("api/clear_cart_history.php", {
+    const response = await fetch("api/remove_cart_history.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -334,6 +334,6 @@ function logout() {
         localStorage.removeItem('userName');
         localStorage.removeItem('redeemedVouchers');
         
-        window.location.href = 'authentication_page.html';
+        window.location.href = '../authentication_page.html';
     }
 }
