@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optima Bank - Cart History</title>
+    <link rel="stylesheet" href="assets/cart-history.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/x-icon" href="../images/optima_bank_logo.png">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">Optima<span>Bank</span></div>
+
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+            <a href="../homepage.html">Home</a>
+            <a href="#">About</a>
+            <a href="#">Shop</a>
+        </nav>
+
+        <!-- Search, Cart, Profile -->
+        <div class="nav-actions">
+            <!-- Search -->
+            <div class="search-box">
+                <input type="text" placeholder="Search..." />
+                <button type="submit">🔍</button>
+            </div>
+
+            <!-- Cart -->
+            <div class="cart">
+                <a href="cart.html">
+                    🛒
+                    <span class="cart-count">2</span>
+                </a>
+            </div>
+
+            <!-- Profile -->
+            <div class="profile">
+                <img src="https://www.freepik.com/icon/profile_6878865" alt="Profile" class="profile-pic" />
+                <div class="dropdown">
+                    <a href="profile.html">My Account</a>
+                    <a href="#">Orders</a>
+                    <a href="#">Settings</a>
+                    <a href="#" onclick="logout()">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="breadcrumb">
+                <a href="#">HOME</a> > <a href="cart.html">CART</a> > HISTORY
+            </div>
+            <h1 class="page-title">Cart History</h1>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="filter-controls">
+            <input type="text" class="search-input" placeholder="Search vouchers..." id="searchInput">
+            <select class="filter-select" id="dateFilter">
+                <option value="">All Time</option>
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+                <option value="year">This Year</option>
+            </select>
+        </div>
+
+        <!-- History Content -->
+        <div class="history-content">
+            <!-- History Items -->
+            <div class="history-items">
+                <div class="history-header">
+                    <div>VOUCHER</div>
+                    <div>QUANTITY</div>
+                    <div>POINTS</div>
+                </div>
+
+                <!-- Loading State -->
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner"></div>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" id="emptyState" style="display: none;">
+                    <div class="empty-icon">📋</div>
+                    <h3>No History Found</h3>
+                    <p>You haven't redeemed any vouchers yet.</p>
+                </div>
+
+                <!-- History items will be populated here -->
+            </div>
+
+            <!-- History Summary -->
+            <div class="history-summary">
+                <h2 class="summary-title">History Summary</h2>
+                
+                <div class="summary-stat">
+                    <span>Total Items</span>
+                    <span id="totalItems">-</span>
+                </div>
+                
+                <div class="summary-stat">
+                    <span>Total Points Used</span>
+                    <span id="totalPoints">-</span>
+                </div>
+                
+                <div class="summary-stat">
+                    <span>Completed Orders</span>
+                    <span id="completedOrders">-</span>
+                </div>
+                
+                <div class="summary-stat highlight">
+                    <span>This Month</span>
+                    <span id="monthlyTotal">-</span>
+                </div>
+
+                <button class="clear-history-btn" id="clearHistoryBtn">Clear History</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/cart-history.js"></script>
+</body>
+</html>
