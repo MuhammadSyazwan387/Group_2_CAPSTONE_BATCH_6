@@ -9,9 +9,27 @@ const validVouchers = {
 
 currentUserId = localStorage.userId;
 
+// fetch user profile
+async function fetchUserProfile() {
+  try {
+    const res = await fetch("./get_user.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: currentUserId }),
+    });
+    if (!res.ok) throw new Error("Failed to fetch profile");
+    const user = await res.json();
+
+    document.getElementById("profile-pic").src = user.data.profile_image || "images/placeholder.svg";
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 // Initialize cart on page load
 document.addEventListener("DOMContentLoaded", function () {
   loadCartCount();
+    fetchUserProfile();
 });
 
 async function loadCartCount() {

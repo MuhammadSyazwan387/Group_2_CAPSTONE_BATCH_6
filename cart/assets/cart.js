@@ -5,7 +5,26 @@ let cartItems = new Map(); // Store cart items in memory for faster updates
 // Initialize cart on page load
 document.addEventListener("DOMContentLoaded", function () {
   loadCartItems();
+  fetchUserProfile();
 });
+
+// fetch user profile
+async function fetchUserProfile() {
+  try {
+    const res = await fetch("../get_user.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: currentUserId }),
+    });
+    if (!res.ok) throw new Error("Failed to fetch profile");
+    const user = await res.json();
+
+
+    document.getElementById("profile-pic").src = '../' + user.data.profile_image || "images/placeholder.svg";
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 // Load cart items from database
 async function loadCartItems() {
@@ -463,3 +482,8 @@ document.addEventListener("keydown", function (e) {
     if (profile) profile.classList.remove("open");
   }
 });
+
+function toggleMenu() {
+  document.querySelector(".nav-links").classList.toggle("active");
+  document.querySelector(".nav-actions").classList.toggle("disactive");
+}
