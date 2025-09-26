@@ -1,5 +1,6 @@
 <?php
 require_once 'common.php';
+require_once 'pdf_generator.php';
 
 try {
     $db = getDBConnection();
@@ -45,8 +46,8 @@ try {
 
         $points_required = (int)$voucher['points_required'];
 
-        // ✅ Get user's points
-        $user_query = "SELECT points FROM users WHERE id = :user_id FOR UPDATE";
+        // ✅ Get user details
+        $user_query = "SELECT id, fullname, email, points FROM users WHERE id = :user_id FOR UPDATE";
         $user_stmt = $db->prepare($user_query);
         $user_stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $user_stmt->execute();
@@ -100,13 +101,48 @@ try {
         // Commit transaction
         $db->commit();
 
-        // ✅ Response
+        // ✅ Generate PDF Receipt
+        $redemption_data = [
+            'voucher' => $voucher['voucher_name'],
+            'points_spent' => $points_required,
+            'remaining_points' => $available_points - $points_required,
+            'checkout_date' => date('Y-m-d H:i:s'),
+            'voucher_id' => $voucher_id
+        ];
+
+        try {
+            // Try to use TCPDF if available
+            if (class_exists('TCPDF')) {
+                $pdfGenerator = new VoucherPDFGenerator();
+                $pdfContent = $pdfGenerator->generateVoucherPDF($voucher, $user, $redemption_data);
+                $pdfBase64 = base64_encode($pdfContent);
+                $pdfType = 'binary';
+            } else {
+                // Fallback to simple HTML receipt
+                $pdfContent = SimplePDFGenerator::generateSimpleReceipt($voucher, $user, $redemption_data);
+                $pdfBase64 = base64_encode($pdfContent);
+                $pdfType = 'html';
+            }
+        } catch (Exception $pdfError) {
+            // If PDF generation fails, continue without PDF
+            error_log("PDF generation failed: " . $pdfError->getMessage());
+            $pdfBase64 = null;
+            $pdfType = null;
+        }
+
+        // ✅ Response with PDF data
         sendResponse(true, 'Checkout completed successfully', [
             'voucher' => $voucher['voucher_name'],
             'points_spent' => $points_required,
             'remaining_points' => $available_points - $points_required,
             'checkout_date' => date('Y-m-d H:i:s'),
-            'message' => 'Voucher redeemed successfully and added to history'
+            'message' => 'Voucher redeemed successfully and added to history',
+            'pdf_receipt' => [
+                'available' => !is_null($pdfBase64),
+                'data' => $pdfBase64,
+                'type' => $pdfType,
+                'filename' => 'voucher_receipt_' . date('Ymd_His') . '.pdf'
+            ]
         ]);
 
     } catch (Exception $e) {
@@ -118,3 +154,4 @@ try {
     logApiError("Checkout error", ['user_id' => $user_id ?? 'unknown', 'error' => $e->getMessage()]);
     sendResponse(false, 'Error processing checkout: ' . $e->getMessage());
 }
+?>

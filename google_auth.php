@@ -1,5 +1,5 @@
 <?php
-header('1ontent-Type: application/json');
+header('Content-Type: application/json'); // Fixed typo from '1ontent-Type'
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -63,12 +63,12 @@ try {
                 'id' => $existingUser['id'],
                 'email' => $existingUser['email'],
                 'fullname' => $existingUser['fullname'],
-                'points' => $existingUser['points']
+                'points' => $existingUser['points'] ?? 0
             ]
         ]);
     } else {
         // Create new user
-        $sql = "INSERT INTO users (email, fullname, google_id, is_active, points, created_at) VALUES (?, ?, ?, 1, 0, NOW())";
+        $sql = "INSERT INTO users (email, fullname, google_id, is_active, points) VALUES (?, ?, ?, 1, 0)";
         $stmt = $pdo->prepare($sql);
         $result = $stmt->execute([$googleUser['email'], $googleUser['name'], $googleUser['id']]);
         
