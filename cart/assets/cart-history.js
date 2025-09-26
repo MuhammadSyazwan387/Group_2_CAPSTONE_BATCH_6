@@ -91,6 +91,7 @@ function createHistoryItemElement(item) {
   const historyItem = document.createElement("div");
   historyItem.className = "history-item";
 
+  console.log(item);
   const completedDate = new Date(item.completed_date);
   const formattedDate = completedDate.toLocaleDateString();
 
@@ -106,7 +107,7 @@ function createHistoryItemElement(item) {
                 </div>
                 <div class="item-quantity">${item.quantity}</div>
                 <div class="item-points">${(
-                  item.quantity * (item.points || 1000)
+                  item.quantity * (item.voucher_points || 1000)
                 ).toLocaleString()}</div>
             `;
 
@@ -121,7 +122,7 @@ function updateSummary() {
   );
   const totalPoints = filteredItems.reduce(
     (sum, item) =>
-      sum + parseInt(item.quantity) * (parseInt(item.points) || 1000),
+      sum + parseInt(item.quantity) * (parseInt(item.voucher_points) || 1000),
     0
   );
   const completedOrders = filteredItems.length;
@@ -134,7 +135,7 @@ function updateSummary() {
   );
   const monthlyTotal = monthlyItems.reduce(
     (sum, item) =>
-      sum + parseInt(item.quantity) * (parseInt(item.points) || 1000),
+      sum + parseInt(item.quantity) * (parseInt(item.voucher_points) || 1000),
     0
   );
 

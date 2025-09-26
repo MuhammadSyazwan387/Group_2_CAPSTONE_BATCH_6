@@ -141,6 +141,7 @@ function addItemEventListeners(cartItem) {
   if (removeBtn) {
     removeBtn.addEventListener("click", function () {
       const itemId = this.dataset.itemId;
+      console.log("Removing item:", itemId);
       removeCartItem(itemId, cartItem);
     });
   }

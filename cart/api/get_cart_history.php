@@ -22,7 +22,8 @@ try {
     $history_query = "SELECT 
                         ch.*,
                         v.title as voucher_title,
-                        v.image as voucher_image
+                        v.image as voucher_image,
+                        v.points as voucher_points
                       FROM cart_item_history ch
                       LEFT JOIN voucher v ON ch.voucher_id = v.id
                       WHERE ch.user_id = :user_id
