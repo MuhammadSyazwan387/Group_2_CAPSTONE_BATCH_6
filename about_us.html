@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Optima Bank</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="about_us.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <div class="logo">Optima<span>Bank</span></div>
+        <nav class="nav-links">
+            <a href="./homepage.html">Home</a>
+            <a href="./about_us.html" class="active">About</a>
+            <a href="#">Shop</a>
+        </nav>
+        <div class="nav-actions">
+            <div class="search-box">
+                <input type="text" placeholder="Search..." />
+                <button type="submit">🔍</button>
+            </div>
+            <div class="cart">
+                <a href="./cart/cart.html">
+                    🛒
+                    <span class="cart-count">2</span>
+                </a>
+            </div>
+            <div class="profile">
+                <img src="https://www.freepik.com/icon/profile_6878865" alt="Profile" class="profile-pic"
+                    id="profile-pic" />
+                <div class="dropdown">
+                    <a href="profile.html">My Account</a>
+                    <a href="./cart/cart.html">Cart</a>
+                    <a href="./cart/cart-history.html">Cart History</a>
+                    <a href="#" onclick="logout()">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Banking for a Better Tomorrow</h1>
+            <p class="hero-subtitle">At Optima Bank, we're not just managing money – we're building sustainable
+                financial solutions that create positive impact for our customers, communities, and planet.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Mission & Vision -->
+        <section class="section">
+            <h2 class="section-title">Our Purpose</h2>
+            <div class="two-column">
+                <div class="column-content">
+                    <h3>Our Mission</h3>
+                    <p>To provide innovative, sustainable financial services that empower individuals and businesses
+                        while contributing to a more equitable and environmentally responsible future.</p>
+                    <p>We believe that banking should be a force for positive change, combining financial excellence
+                        with social responsibility to create lasting value for all stakeholders.</p>
+                </div>
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1560472355-536de3962603?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Sustainable banking mission">
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Innovation and technology">
+                </div>
+                <div class="column-content">
+                    <h3>Our Vision</h3>
+                    <p>To be the leading sustainable bank that transforms how financial services contribute to global
+                        prosperity while protecting our planet for future generations.</p>
+                    <p>We envision a world where every financial decision creates positive impact, and where banking
+                        serves as a catalyst for sustainable development and inclusive growth.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <h2 class="section-title">Our Impact by Numbers</h2>
+            <div class="stats-grid">
+                <div class="stats">
+                    <div class="stat-item">
+                        <i class="fas fa-users stat-icon"></i>
+                        <span class="stat-number">2.5M+</span>
+                        <span class="stat-label">Customers Served</span>
+                    </div>
+
+                    <div class="stat-item">
+                        <i class="fas fa-hand-holding-usd stat-icon"></i>
+                        <span class="stat-number">$12B</span>
+                        <span class="stat-label">Sustainable Loans</span>
+                    </div>
+
+                    <div class="stat-item">
+                        <i class="fas fa-leaf stat-icon"></i>
+                        <span class="stat-number">850+</span>
+                        <span class="stat-label">Green Projects Funded</span>
+                    </div>
+
+                    <div class="stat-item">
+                        <i class="fas fa-recycle stat-icon"></i>
+                        <span class="stat-number">45%</span>
+                        <span class="stat-label">Carbon Footprint Reduction</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Company History -->
+        <section class="section">
+            <h2 class="section-title">Our Journey</h2>
+            <p class="section-subtitle">From a traditional bank to a leader in sustainable finance</p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>The Beginning</h3>
+                        <p>Founded as a community bank with a vision to serve local businesses and families with
+                            integrity and personalized service.</p>
+                    </div>
+                    <div class="timeline-year">1995</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Digital Transformation</h3>
+                        <p>Launched our first online banking platform and began integrating technology to enhance
+                            customer experience while maintaining personal touch.</p>
+                    </div>
+                    <div class="timeline-year">2008</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Sustainability Commitment</h3>
+                        <p>Made our first major commitment to sustainable finance by establishing our Green Banking
+                            division and setting carbon-neutral operational goals.</p>
+                    </div>
+                    <div class="timeline-year">2015</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>SDG Alignment</h3>
+                        <p>Formally aligned our business strategy with UN Sustainable Development Goals and became a
+                            signatory to the Principles for Responsible Banking.</p>
+                    </div>
+                    <div class="timeline-year">2019</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Industry Leadership</h3>
+                        <p>Recognized as the leading sustainable bank in our region, launching innovative climate
+                            finance products and achieving net-zero operations.</p>
+                    </div>
+                    <div class="timeline-year">2023</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Values -->
+        <section class="section">
+            <h2 class="section-title">Our Values</h2>
+            <p class="section-subtitle">The principles that guide everything we do</p>
+
+            <div class="values-grid">
+                <div class="value-card">
+                    <span class="value-icon">🌱</span>
+                    <h3 class="value-title">Sustainability</h3>
+                    <p>We integrate environmental and social considerations into every business decision, ensuring our
+                        operations contribute to a healthier planet.</p>
+                </div>
+
+                <div class="value-card">
+                    <span class="value-icon">🤝</span>
+                    <h3 class="value-title">Integrity</h3>
+                    <p>We operate with transparency, honesty, and ethical standards that exceed industry expectations,
+                        building trust through consistent actions.</p>
+                </div>
+
+                <div class="value-card">
+                    <span class="value-icon">💡</span>
+                    <h3 class="value-title">Innovation</h3>
+                    <p>We continuously evolve our services and processes to better serve our customers while advancing
+                        sustainable finance solutions.</p>
+                </div>
+
+                <div class="value-card">
+                    <span class="value-icon">🌍</span>
+                    <h3 class="value-title">Inclusion</h3>
+                    <p>We believe financial services should be accessible to all, promoting diversity, equity, and
+                        inclusion in everything we do.</p>
+                </div>
+
+                <div class="value-card">
+                    <span class="value-icon">🎯</span>
+                    <h3 class="value-title">Excellence</h3>
+                    <p>We strive for the highest standards in customer service, operational efficiency, and financial
+                        performance.</p>
+                </div>
+
+                <div class="value-card">
+                    <span class="value-icon">💚</span>
+                    <h3 class="value-title">Responsibility</h3>
+                    <p>We take ownership of our impact on society and the environment, actively contributing to positive
+                        change.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SDG Commitment -->
+        <section class="sdg-section">
+            <h2 class="section-title">Our SDG Commitment</h2>
+            <p class="section-subtitle">We actively contribute to achieving the United Nations Sustainable Development
+                Goals</p>
+
+            <div class="sdg-grid">
+                <div class="sdg-item">
+                    <span class="sdg-number">SDG 1</span>
+                    <span>No Poverty</span>
+                </div>
+                <div class="sdg-item">
+                    <span class="sdg-number">SDG 5</span>
+                    <span>Gender Equality</span>
+                </div>
+                <div class="sdg-item">
+                    <span class="sdg-number">SDG 7</span>
+                    <span>Clean Energy</span>
+                </div>
+                <div class="sdg-item">
+                    <span class="sdg-number">SDG 8</span>
+                    <span>Economic Growth</span>
+                </div>
+                <div class="sdg-item">
+                    <span class="sdg-number">SDG 10</span>
+                    <span>Reduced Inequalities</span>
+                </div>
+                <div class="sdg-item">
+                    <span class="sdg-number">SDG 13</span>
+                    <span>Climate Action</span>
+                </div>
+            </div>
+
+            <div class="two-column" style="margin-top: 2rem;">
+                <div class="column-content">
+                    <h3>Climate Action Leadership</h3>
+                    <p>Our comprehensive climate strategy includes carbon-neutral operations, green lending portfolios,
+                        and supporting renewable energy projects across our operational regions.</p>
+                </div>
+                <div class="column-content">
+                    <h3>Financial Inclusion</h3>
+                    <p>We provide accessible banking services to underserved communities, support women-owned
+                        businesses, and promote economic opportunities for all segments of society.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leadership Team -->
+        <section class="section">
+            <h2 class="section-title">Leadership Team</h2>
+            <p class="section-subtitle">Experienced professionals committed to sustainable banking excellence</p>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-photo">👩‍💼</div>
+                    <h3>Sarah Chen</h3>
+                    <p><strong>Chief Executive Officer</strong></p>
+                    <p>20+ years in sustainable finance with expertise in ESG strategy and stakeholder engagement.</p>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-photo">👨‍💼</div>
+                    <h3>Marcus Rodriguez</h3>
+                    <p><strong>Chief Sustainability Officer</strong></p>
+                    <p>Environmental economist leading our climate finance initiatives and sustainability reporting.</p>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-photo">👩‍💼</div>
+                    <h3>Lisa Thompson</h3>
+                    <p><strong>Chief Technology Officer</strong></p>
+                    <p>Digital transformation leader focused on innovative fintech solutions and operational efficiency.
+                    </p>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-photo">👨‍💼</div>
+                    <h3>James Wilson</h3>
+                    <p><strong>Chief Risk Officer</strong></p>
+                    <p>Risk management expert specializing in climate risk assessment and sustainable portfolio
+                        management.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action
+        <section class="cta-section">
+            <h2 style="margin-bottom: 1rem; font-size: 2.5rem;">Join Us in Building a Sustainable Future</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Experience banking that aligns with your values and
+                contributes to positive change.</p>
+            <a href="#" class="cta-button">Open an Account Today</a>
+            <a href="#" class="cta-button"
+                style="margin-left: 1rem; background: transparent; color: white; border: 2px solid white;">Learn
+                More</a>
+        </section> -->
+    </main>
+</body>
+<script>
+    currentUserId = localStorage.userId;
+
+    // fetch user profile
+    async function fetchUserProfile() {
+        try {
+            const res = await fetch("./get_user.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: currentUserId }),
+            });
+            if (!res.ok) throw new Error("Failed to fetch profile");
+            const user = await res.json();
+
+            document.getElementById("profile-pic").src = user.data.profile_image || "images/placeholder.svg";
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    // Initialize cart on page load
+    document.addEventListener("DOMContentLoaded", function () {
+        loadCartCount();
+        fetchUserProfile();
+    });
+
+    async function loadCartCount() {
+        try {
+            const response = await fetch('./cart/api/get_cart_count.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_id: currentUserId,
+                }),
+            });
+            const data = await response.json();;
+
+            if (data.success) {
+                updateCartCount(data.data.item_count);
+            } else {
+                console.error('Failed to load cart count:', data.message);
+            }
+        } catch (error) {
+            console.error('Error loading cart count:', error);
+        }
+    }
+
+    // Update cart count in navigation
+    function updateCartCount(count) {
+        console.log(`Cart has ${count} items`);
+        // Update cart count in navigation if needed
+        const cartCount = document.querySelector(".cart-count");
+        if (cartCount) {
+            cartCount.textContent = count;
+            cartCount.style.display = count > 0 ? "block" : "none";
+        }
+    }
+
+    function logout() {
+        if (confirm('Are you sure you want to logout?')) {
+            localStorage.removeItem('userLoggedIn');
+            localStorage.removeItem('userEmail');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('redeemedVouchers');
+
+            window.location.href = 'authentication_page.html';
+        }
+    }
+
+    document.addEventListener('click', function (e) {
+        const profile = document.querySelector('.profile');
+        if (!profile) return;
+        if (profile.contains(e.target)) {
+            const isProfileClick = e.target.closest('.profile-pic') || e.target.closest('.profile');
+            if (isProfileClick) {
+                profile.classList.toggle('open');
+            }
+            return;
+        }
+        profile.classList.remove('open');
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            const profile = document.querySelector('.profile');
+            if (profile) profile.classList.remove('open');
+        }
+    });
+    document.addEventListener('DOMContentLoaded', loadVouchers);
+
+    function toggleMenu() {
+        document.querySelector(".nav-links").classList.toggle("active");
+        document.querySelector(".nav-actions").classList.toggle("disactive");
+    }
+</script>
+
+</html>

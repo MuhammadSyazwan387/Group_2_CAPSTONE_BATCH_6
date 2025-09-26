@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="images/optima_bank_logo.png" />
+  <title>Voucher Details - Optima Bank</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .voucher-details {
+      background: linear-gradient(135deg, #1a1a2e, #2b0f28, #3d0f2f);
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .hero-banner {
+      background: linear-gradient(135deg,
+          rgba(255, 77, 166, 0.1),
+          rgba(255, 255, 255, 0.05));
+      padding: 60px 0 40px;
+      border-bottom: 1px solid rgba(255, 77, 166, 0.2);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    .breadcrumb a {
+      color: #ff4da6;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .breadcrumb a:hover {
+      color: white;
+    }
+
+    .breadcrumb span {
+      color: #666;
+    }
+
+    .voucher-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .voucher-image-container {
+      position: relative;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transform: perspective(1000px) rotateY(-5deg);
+      transition: transform 0.3s ease;
+    }
+
+    .voucher-image-container:hover {
+      transform: perspective(1000px) rotateY(0deg);
+    }
+
+    .voucher-image-container img {
+      width: 100%;
+      height: auto;
+      border-radius: 15px;
+      display: block;
+    }
+
+    .voucher-badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: linear-gradient(135deg, #ff4da6, #ff6b9d);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(255, 77, 166, 0.4);
+    }
+
+    .voucher-info-header {
+      color: white;
+    }
+
+    .voucher-category {
+      display: inline-block;
+      background: rgba(255, 77, 166, 0.2);
+      color: #ff4da6;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 77, 166, 0.3);
+    }
+
+    .voucher-title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ff4da6, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    .voucher-description {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #ccc;
+      margin-bottom: 30px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(255, 77, 166, 0.2);
+    }
+
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #ff4da6;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .action-section {
+      margin-top: 40px;
+    }
+
+    .primary-action {
+      background: linear-gradient(135deg, #ff4da6, #ff6b9d);
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(255, 77, 166, 0.3);
+      margin-right: 15px;
+    }
+
+    .primary-action:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(255, 77, 166, 0.4);
+    }
+
+    .secondary-action {
+      margin-top: 10px;
+      margin-right: 10px;
+      background: transparent;
+      color: #ff4da6;
+      border: 2px solid #ff4da6;
+      padding: 14px 30px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .secondary-action:hover {
+      background: #ff4da6;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .details-section {
+      background: rgba(255, 255, 255, 0.05);
+      margin: 60px auto;
+      padding: 60px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .details-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      /* Changed from 1fr 1fr to single column */
+      gap: 40px;
+      /* Reduced gap since it's now single column */
+    }
+
+    .terms-card,
+    .features-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      width: 100%;
+      /* Ensure full width */
+    }
+
+    /* Make terms card specifically wider */
+    .terms-card {
+      max-width: 100%;
+      /* Full width of container */
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .card-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #ff4da6, #ff6b9d);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .card-content {
+      color: #ccc;
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+      color: #ccc;
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      color: #ff4da6;
+      font-weight: bold;
+      width: 20px;
+      height: 20px;
+      background: rgba(255, 77, 166, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+
+    .loading,
+    .error {
+      text-align: center;
+      padding: 100px 20px;
+      color: #aaa;
+      font-style: italic;
+      font-size: 1.1rem;
+    }
+
+    .error {
+      color: #ff6b6b;
+    }
+
+    .loading::before {
+      content: "";
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 77, 166, 0.2);
+      border-left: 4px solid #ff4da6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+      vertical-align: top;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .voucher-hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .voucher-image-container {
+        transform: none;
+        margin-bottom: 20px;
+      }
+
+      .voucher-title {
+        font-size: 2.2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .primary-action,
+      .secondary-action {
+        width: 100%;
+        margin: 10px 0;
+      }
+
+      .hero-banner {
+        padding: 40px 0 30px;
+      }
+
+      .details-content {
+        grid-template-columns: 1fr;
+        /* Keep single column on mobile */
+      }
+    }
+
+    .pdf-download-notification {
+      background: #e8f5e8;
+      border: 1px solid #4caf50;
+      color: #2e7d32;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 10px 0;
+      display: none;
+      animation: slideDown 0.3s ease;
+    }
+
+    .pdf-download-notification.show {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <!-- Hamburger Menu -->
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <div class="logo">Optima<span>Bank</span></div>
+
+    <!-- Navigation Links -->
+    <nav class="nav-links">
+      <a href="homepage.html">Home</a>
+      <a href="./about_us.html">About</a>
+      <a href="#">Shop</a>
+    </nav>
+
+    <!-- Search, Cart, Profile -->
+    <div class="nav-actions">
+      <!-- Search -->
+      <div class="search-box">
+        <input type="text" placeholder="Search..." />
+        <button type="submit">🔍</button>
+      </div>
+
+      <!-- Cart -->
+      <div class="cart">
+        <a href="./cart/cart.html">
+          🛒
+          <span class="cart-count">2</span>
+        </a>
+      </div>
+
+      <!-- Profile -->
+      <div class="profile">
+        <img src="https://www.freepik.com/icon/profile_6878865" alt="Profile" class="profile-pic" id="profile-pic" />
+        <div class="dropdown">
+          <a href="./profile.html">My Account</a>
+          <a href="./cart/cart.html">Cart</a>
+          <a href="./cart/cart-history.html">Cart History</a>
+          <a href="#" onclick="logout()">Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="voucher-details">
+    <section class="hero-banner">
+      <div class="container">
+        <nav class="breadcrumb">
+          <a href="homepage.html">Home</a>
+          <span>›</span>
+          <a href="category.php">Vouchers</a>
+          <span>›</span>
+          <span>Details</span>
+        </nav>
+
+        <div id="voucher-content">
+          <div class="loading">Loading voucher details...</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="details-section">
+      <div class="container">
+        <div class="details-content" id="details-content">
+          <!-- Content will be loaded here -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    currentUserId = localStorage.userId;
+
+    // fetch user profile
+    async function fetchUserProfile() {
+      try {
+        const res = await fetch("./get_user.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user_id: currentUserId }),
+        });
+        if (!res.ok) throw new Error("Failed to fetch profile");
+        const user = await res.json();
+
+        document.getElementById("profile-pic").src = user.data.profile_image || "images/placeholder.svg";
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Initialize cart on page load
+    document.addEventListener("DOMContentLoaded", function () {
+      loadCartCount();
+      fetchUserProfile();
+    });
+
+    async function loadCartCount() {
+      try {
+        const response = await fetch("./cart/api/get_cart_count.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: currentUserId,
+          }),
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          updateCartCount(data.data.item_count);
+        } else {
+          console.error("Failed to load cart count:", data.message);
+        }
+      } catch (error) {
+        console.error("Error loading cart count:", error);
+      }
+    }
+
+    // Update cart count in navigation
+    function updateCartCount(count) {
+      console.log(`Cart has ${count} items`);
+      // Update cart count in navigation if needed
+      const cartCount = document.querySelector(".cart-count");
+      if (cartCount) {
+        cartCount.textContent = count;
+        cartCount.style.display = count > 0 ? "block" : "none";
+      }
+    }
+
+    // Get voucher ID from URL parameters
+    function getVoucherIdFromUrl() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get("id");
+    }
+
+    // Load voucher details
+    async function loadVoucherDetails() {
+      const voucherId = getVoucherIdFromUrl();
+
+      if (!voucherId) {
+        showError("No voucher ID provided");
+        return;
+      }
+
+      try {
+        console.log("Loading voucher details for ID:", voucherId);
+        const response = await fetch(`voucher_details.php?id=${voucherId}`);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const voucher = await response.json();
+        console.log("Voucher details:", voucher);
+
+        if (voucher.error) {
+          console.error("Database error:", voucher.error);
+          showError("Error: " + voucher.error);
+          return;
+        }
+
+        displayVoucherDetails(voucher);
+      } catch (error) {
+        console.error("Error loading voucher details:", error);
+        showError("Failed to load voucher details: " + error.message);
+      }
+    }
+
+    function displayVoucherDetails(voucher) {
+      const contentDiv = document.getElementById("voucher-content");
+      const detailsDiv = document.getElementById("details-content");
+
+      contentDiv.innerHTML = `
+        <div class="voucher-hero">
+            <div class="voucher-image-container">
+                <img src="${voucher.image}" alt="${voucher.title}" 
+                     onerror="this.src='images/placeholder.jpg';">
+                <div class="voucher-badge">Premium</div>
+            </div>
+            
+            <div class="voucher-info-header">
+                <div class="voucher-category">Digital Voucher</div>
+                <h1 class="voucher-title">${voucher.title}</h1>
+                <p class="voucher-description">
+                    ${voucher.description ||
+        "Experience amazing savings with this exclusive voucher. Perfect for your shopping needs and guaranteed satisfaction."
+        }
+                </p>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">${voucher.total_redeem || 0
+        }</span>
+                        <span class="stat-label">Redeemed</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">★ 4.8</span>
+                        <span class="stat-label">Rating</span>
+                    </div>
+                </div>
+                
+                <div class="action-section">
+                    <button class="primary-action" onclick="redeemVoucher()">
+                        Redeem Now
+                    </button>
+                    <button class="secondary-action" onclick="addToCart(${voucher.id
+        }, 1)">
+                        Add to Cart
+                    </button>
+                    <button class="secondary-action" onclick="shareVoucher()">
+                        Share
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+      detailsDiv.innerHTML = `
+        <div class="terms-card">
+            <div class="card-header">
+                <div class="card-icon">📋</div>
+                <h2 class="card-title">Terms & Conditions</h2>
+            </div>
+            <div class="card-content">
+                ${voucher.terms_and_condition ||
+        "Standard terms and conditions apply. Voucher is valid for one-time use only. Cannot be combined with other offers. Valid for 30 days from activation."
+        }
+            </div>
+        </div>
+    `;
+    }
+
+    function showError(message) {
+      const contentDiv = document.getElementById("voucher-content");
+      contentDiv.innerHTML = `<div class="error">${message}</div>`;
+    }
+
+    // Add PDF download functionality
+    function downloadPDFReceipt(pdfData, filename) {
+      if (!pdfData.available) {
+        showMessage('PDF receipt not available', 'error');
+        return;
+      }
+
+      const notification = document.createElement('div');
+      notification.className = 'pdf-download-notification show';
+      notification.innerHTML = '📄 Downloading your voucher receipt...';
+      document.querySelector('.voucher-actions').appendChild(notification);
+
+      try {
+        if (pdfData.type === 'html') {
+          // For HTML receipts, open in new window for printing
+          const htmlContent = atob(pdfData.data);
+          const newWindow = window.open('', '_blank');
+          newWindow.document.write(htmlContent);
+          newWindow.document.close();
+        } else {
+          // For binary PDF, trigger download
+          const byteCharacters = atob(pdfData.data);
+          const byteNumbers = new Array(byteCharacters.length);
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+          const byteArray = new Uint8Array(byteNumbers);
+          const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
+        }
+
+        // Update notification
+        setTimeout(() => {
+          notification.innerHTML = '✅ Receipt downloaded successfully!';
+          setTimeout(() => {
+            notification.remove();
+          }, 3000);
+        }, 500);
+
+      } catch (error) {
+        console.error('Error downloading PDF:', error);
+        notification.innerHTML = '❌ Error downloading receipt';
+        notification.style.background = '#ffebee';
+        notification.style.borderColor = '#f44336';
+        notification.style.color = '#c62828';
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
+      }
+    }
+
+    // Update redeem function
+    async function redeemVoucher() {
+      if (!currentUserId) {
+        showMessage('Please log in to redeem vouchers', 'error');
+        return;
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const voucherId = urlParams.get('id');
+
+      if (!voucherId) {
+        showMessage('Invalid voucher ID', 'error');
+        return;
+      }
+
+      try {
+        showMessage('Processing redemption...', 'info');
+
+        const response = await fetch('./cart/api/redeem_voucher.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: currentUserId,
+            voucher_id: parseInt(voucherId),
+          }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          showMessage('Voucher redeemed successfully!', 'success');
+
+          // Download PDF receipt if available
+          if (data.data.pdf_receipt && data.data.pdf_receipt.available) {
+            setTimeout(() => {
+              downloadPDFReceipt(data.data.pdf_receipt, data.data.pdf_receipt.filename);
+            }, 1000);
+          }
+
+          // Update points display if available
+          if (data.data.remaining_points !== undefined) {
+            // Update points in localStorage
+            localStorage.setItem('userPoints', data.data.remaining_points);
+          }
+
+        } else {
+          showMessage(data.message || 'Redemption failed', 'error');
+        }
+      } catch (error) {
+        console.error('Redemption error:', error);
+        showMessage('Error processing redemption', 'error');
+      }
+    }
+
+    // Load voucher details when page loads
+    document.addEventListener("DOMContentLoaded", loadVoucherDetails);
+
+    // Utility functions for user feedback
+    function showSuccess(message) {
+      showNotification(message, "success");
+    }
+
+    function showError(message) {
+      showNotification(message, "error");
+    }
+
+    function showNotification(message, type) {
+      // Create notification element
+      const notification = document.createElement("div");
+      notification.className = `notification ${type}`;
+      notification.textContent = message;
+      notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                color: white;
+                font-weight: 500;
+                z-index: 1000;
+                animation: slideInRight 0.3s ease;
+                background: ${type === "success" ? "#10b981" : "#ef4444"};
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            `;
+
+      document.body.appendChild(notification);
+
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.style.animation = "slideOutRight 0.3s ease";
+        setTimeout(() => notification.remove(), 300);
+      }, 3000);
+    }
+
+    // Add notification animations
+    const style = document.createElement("style");
+    style.textContent = `
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateX(0); }
+                to { opacity: 0; transform: translateX(-100%); }
+            }
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+    document.head.appendChild(style);
+
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('userLoggedIn');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('redeemedVouchers');
+        window.location.href = 'authentication_page.html';
+      }
+    }
+
+    function toggleMenu() {
+      document.querySelector(".nav-links").classList.toggle("active");
+      document.querySelector(".nav-actions").classList.toggle("disactive");
+    }
+  </script>
+</body>
+
+</html>

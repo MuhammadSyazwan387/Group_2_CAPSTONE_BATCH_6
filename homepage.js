@@ -7,6 +7,65 @@ const validVouchers = {
     'MOVIE15': { value: '$15 Movie Tickets', type: 'Entertainment' }
 };
 
+currentUserId = localStorage.userId;
+
+// fetch user profile
+async function fetchUserProfile() {
+  try {
+    const res = await fetch("./get_user.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: currentUserId }),
+    });
+    if (!res.ok) throw new Error("Failed to fetch profile");
+    const user = await res.json();
+
+    document.getElementById("profile-pic").src = user.data.profile_image || "images/placeholder.svg";
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+// Initialize cart on page load
+document.addEventListener("DOMContentLoaded", function () {
+  loadCartCount();
+    fetchUserProfile();
+});
+
+async function loadCartCount() {
+    try {
+        const response = await fetch('./cart/api/get_cart_count.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: currentUserId,
+            }),
+        });
+        const data = await response.json();;
+
+        if (data.success) {
+            updateCartCount(data.data.item_count);
+        } else {
+            console.error('Failed to load cart count:', data.message);
+        }
+    } catch (error) {
+        console.error('Error loading cart count:', error);
+    }
+}
+
+// Update cart count in navigation
+function updateCartCount(count) {
+  console.log(`Cart has ${count} items`);
+  // Update cart count in navigation if needed
+  const cartCount = document.querySelector(".cart-count");
+  if (cartCount) {
+    cartCount.textContent = count;
+    cartCount.style.display = count > 0 ? "block" : "none";
+  }
+}
+
 function logout() {
     if (confirm('Are you sure you want to logout?')) {
         localStorage.removeItem('userLoggedIn');
@@ -181,3 +240,4 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('Optima Bank voucher redemption system loaded successfully');
 });
+

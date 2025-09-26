@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Optima Bank - Profile</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="profile.css">
+  <link rel="icon" type="image/x-icon" href="images/optima_bank_logo.png"/>
+</head>
+<body>
+<!-- Navbar (same as homepage) -->
+<header class="navbar">
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+  <div class="logo">Optima<span>Bank</span></div>
+
+  <!-- Navigation Links -->
+  <nav class="nav-links">
+    <a href="homepage.html">Home</a>
+    <a href="./about_us.html">About</a>
+    <a href="#">Shop</a>
+  </nav>
+
+  <!-- Search, Cart, Profile -->
+  <div class="nav-actions">
+    <div class="search-box">
+      <input type="text" placeholder="Search..." />
+      <button type="submit">🔍</button>
+    </div>
+
+    <div class="cart">
+      <a href="./cart/cart.html">
+      🛒
+      <span class="cart-count">0</span>
+      </a>
+    </div>
+
+    <div class="profile">
+      <img src="images/placeholder.svg" alt="Profile" class="profile-pic" id="profile-pic"/>
+      <div class="dropdown">
+        <a href="profile.html">My Account</a>
+        <a href="./cart/cart.html">Cart</a>
+        <a href="./cart/cart-history.html">Cart History</a>
+        <a href="#" onclick="logout()">Logout</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <img id="profile-image" src="images/placeholder.svg" alt="Profile"/>
+      <div>
+        <h1 id="full-name">Member Profile</h1>
+        <p id="profile-description">View and manage your account details, points balance and redeemed vouchers.</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="profile-alert" class="profile-alert hidden" role="status" aria-live="polite"></div>
+
+  <!-- Profile Details -->
+  <section class="container">
+    <!-- Personal Info -->
+    <div class="card">
+      <h2>Personal Information</h2>
+      <div class="info-row"><strong>Full name:</strong> <span id="name">John Doe</span></div>
+      <div class="info-row"><strong>Email:</strong> <span id="email">john.doe@example.com</span></div>
+      <div class="info-row"><strong>Phone:</strong> <span id="phone">+60 123-456 789</span></div>
+      <div class="info-row"><strong>Address:</strong> <span id="address">123 Example Street</span></div>
+      <div class="info-row"><strong>About me:</strong> <span id="about">Coffee lover, tech enthusiast</span></div>
+
+      <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn tertiary" onclick="changeProfilePhoto()">Change Photo</button>
+        <button class="btn primary" onclick="editProfile()">Edit Profile</button>
+        <button class="btn secondary" onclick="changePassword()">Change Password</button>
+      </div>
+    </div>
+
+    <!-- Account Summary -->
+    <div class="card">
+      <h2>Account Summary</h2>
+      <div class="info-row"><span>Points Balance</span> <strong id="points">0</strong></div>
+      <div class="info-row"><span>Vouchers Redeemed</span> <strong id="redeemed-count">0</strong></div>
+
+      <div style="margin-top:20px;">
+        <h3 style="margin-bottom:10px;">Recent Redeemed Vouchers</h3>
+        <div id="redeemed-list" style="display:flex; flex-direction:column; gap:12px;">
+          <!-- JS will inject vouchers here -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Footer (same as homepage) -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Online Store</h4>
+      <ul>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">Pages</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Home</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <p>Phone: 234 810 699 9825</p>
+      <p>Email: optimabankonlinestore@gmail.com</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Privacy Notice</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 Optima Bank. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Edit Profile Modal -->
+<div class="modal" id="editProfileModal" aria-hidden="true" role="dialog" aria-labelledby="editProfileTitle">
+  <div class="modal-content">
+    <header class="modal-header">
+      <h2 id="editProfileTitle">Edit Personal Information</h2>
+      <button type="button" class="modal-close" data-close-modal>&times;</button>
+    </header>
+    <form id="editProfileForm" class="modal-body">
+      <div class="form-group">
+        <label for="editFullname">Full name</label>
+        <input type="text" id="editFullname" name="fullname" required maxlength="50" />
+      </div>
+      <div class="form-group">
+        <label for="editPhone">Phone</label>
+        <input type="text" id="editPhone" name="phone" maxlength="20" placeholder="e.g. +60 123-456 789" />
+      </div>
+      <div class="form-group">
+        <label for="editAddress">Address</label>
+        <textarea id="editAddress" name="address" rows="2" maxlength="255" placeholder="Enter your mailing address"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="editAbout">About me</label>
+        <textarea id="editAbout" name="about" rows="3" maxlength="255" placeholder="Share something about yourself"></textarea>
+      </div>
+      <div id="editProfileMessage" class="form-message" role="alert"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn secondary" data-close-modal>Cancel</button>
+        <button type="submit" class="btn primary">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal" id="changePasswordModal" aria-hidden="true" role="dialog" aria-labelledby="changePasswordTitle">
+  <div class="modal-content">
+    <header class="modal-header">
+      <h2 id="changePasswordTitle">Change Password</h2>
+      <button type="button" class="modal-close" data-close-modal>&times;</button>
+    </header>
+    <form id="changePasswordForm" class="modal-body">
+      <div class="form-group">
+        <label for="currentPassword">Current password</label>
+        <input type="password" id="currentPassword" name="currentPassword" required minlength="6" autocomplete="current-password" />
+      </div>
+      <div class="form-group">
+        <label for="newPassword">New password</label>
+        <input type="password" id="newPassword" name="newPassword" required minlength="6" autocomplete="new-password" />
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm new password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6" autocomplete="new-password" />
+      </div>
+      <div id="changePasswordMessage" class="form-message" role="alert"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn secondary" data-close-modal>Cancel</button>
+        <button type="submit" class="btn primary">Update Password</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Change Photo Modal -->
+<div class="modal" id="changePhotoModal" aria-hidden="true" role="dialog" aria-labelledby="changePhotoTitle">
+  <div class="modal-content">
+    <header class="modal-header">
+      <h2 id="changePhotoTitle">Update Profile Picture</h2>
+      <button type="button" class="modal-close" data-close-modal>&times;</button>
+    </header>
+    <form id="changePhotoForm" class="modal-body" enctype="multipart/form-data">
+      <div class="photo-preview" id="photoPreview">
+        <img src="images/placeholder.svg" alt="Profile preview" id="photoPreviewImage">
+      </div>
+      <div class="form-group">
+        <label for="profileImageInput">Choose an image</label>
+        <input type="file" id="profileImageInput" name="profileImage" accept="image/png, image/jpeg, image/gif, image/webp" required />
+        <p class="input-hint">PNG, JPG, GIF, or WEBP up to 5 MB.</p>
+      </div>
+      <div id="changePhotoMessage" class="form-message" role="alert"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn secondary" data-close-modal>Cancel</button>
+        <button type="submit" class="btn primary">Upload Photo</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="profile.js"></script>
+<script>
+
+// Profile dropdown: keep open on click, close on outside click or Escape
+document.addEventListener('click', function(e){
+  const profile = document.querySelector('.profile');
+  if (!profile) return;
+
+  if (profile.contains(e.target)) {
+    const isImage = e.target.closest('.profile-pic') || e.target.closest('.profile');
+    if (isImage) {
+      profile.classList.toggle('open');
+    }
+    return;
+  }
+
+  profile.classList.remove('open');
+});
+
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') {
+    const profile = document.querySelector('.profile');
+    if (profile) profile.classList.remove('open');
+  }
+});
+
+function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('userLoggedIn');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('redeemedVouchers');
+        window.location.href = 'authentication_page.html';
+      }
+    }
+
+function toggleMenu() {
+  document.querySelector(".nav-links").classList.toggle("active");
+  document.querySelector(".nav-actions").classList.toggle("disactive");
+}
+</script>
+
+</body>
+</html>

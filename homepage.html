@@ -1,105 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Optima Bank - Voucher Redemption</title>
-    <link rel="stylesheet" href="homepage.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/x-icon" href="images/optima_bank_logo.png">
+  <title>Optima Bank - Homepage</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* Voucher Categories Section - FIXED SIZING AND ALIGNMENT */
+    .categories {
+      margin: 3rem auto 2rem auto;
+      max-width: 900px;
+      padding: 0 1rem;
+    }
+    .categories h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: #ffb4eb;
+      margin-bottom: 1.5rem;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      letter-spacing: 1px;
+    }
+    .category-grid-2rows {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+    }
+    .category-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 0;
+    }
+    .category-card {
+      background: #35003c;
+      color: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 8px #0002;
+      width: 200px;
+      height: 110px;
+      font-size: 1.13rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.16s, box-shadow 0.16s;
+      font-weight: 500;
+      border: 2px solid #6824a8;
+      text-align: center;
+      font-family: inherit;
+      padding: 0.5rem;
+      box-sizing: border-box;
+      /* Prevent text wrapping awkwardly */
+      overflow: hidden;
+      white-space: normal;
+    }
+    .category-card span.icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+    .category-label {
+      font-size: 1.08rem;
+      line-height: 1.2;
+      word-break: break-word;
+      display: block;
+      /* Force two lines, center text vertically */
+      height: 2.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .category-card:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 6px 18px #44006670;
+      border-color: #ffb4eb;
+      background: #54005c;
+    }
+    .browse-btn-box {
+      text-align:center;
+      margin-top:2rem;
+    }
+    /* .btn.primary {
+      background: linear-gradient(90deg, #ffb4eb 40%, #6824a8 120%);
+      color: #35003c;
+      border: none;
+      border-radius: 24px;
+      padding: 0.8rem 2rem;
+      font-size: 1.13rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      margin-top: 0.5rem;
+    }
+    .btn.primary:hover {
+      background: linear-gradient(90deg, #6824a8 40%, #ffb4eb 120%);
+      color: #fff;
+    } */
+    /* Responsive */
+    @media (max-width: 900px) {
+      .category-card {
+        width: 32vw;
+        min-width: 120px;
+        height: 100px;
+        font-size: 1rem;
+      }
+      .category-row {
+        gap: 1rem;
+      }
+    }
+    @media (max-width: 600px) {
+      .category-row {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+      }
+      .category-card {
+        width: 90vw;
+        min-width: 120px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <h1 class="logo">Optima Bank</h1>
-                <div class="user-menu">
-                    <span class="welcome-text">Welcome back!</span>
-                    <button class="logout-btn" onclick="logout()">Logout</button>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="hero-section">
-                <h1 class="hero-title">Voucher Redemption Center</h1>
-                <p class="hero-subtitle">Redeem your voucher codes and claim your rewards instantly</p>
-            </div>
-
-            <!-- Voucher Redemption Form -->
-            <div class="voucher-form-section">
-                <div class="voucher-form-card">
-                    <h2>🎟️ Redeem Voucher Code</h2>
-                    <p>Enter your voucher code below to claim your reward</p>
-                    <form id="voucherForm">
-                        <div class="voucher-input-group">
-                            <input type="text" id="voucherCode" placeholder="Enter voucher code (e.g., SAVE2024)" required>
-                            <button type="submit" class="redeem-btn">Redeem Now</button>
-                        </div>
-                    </form>
-                    <div id="redemptionResult" class="redemption-result hidden"></div>
-                </div>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎁</div>
-                    <h3>Available Vouchers</h3>
-                    <p>Browse and discover new voucher codes for rewards</p>
-                    <button class="feature-btn">Browse Vouchers</button>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🏆</div>
-                    <h3>Redemption History</h3>
-                    <p>View all your previously redeemed vouchers and rewards</p>
-                    <button class="feature-btn">View History</button>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3>Rewards Balance</h3>
-                    <p>Check your current reward points and available balance</p>
-                    <button class="feature-btn">Check Balance</button>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🔔</div>
-                    <h3>Notifications</h3>
-                    <p>Get notified about new vouchers and special offers</p>
-                    <button class="feature-btn">Manage Alerts</button>
-                </div>
-            </div>
-
-            <div class="recent-activity">
-                <h2>Recent Redemptions</h2>
-                <div class="activity-list">
-                    <div class="activity-item">
-                        <div class="activity-icon">🎟️</div>
-                        <div class="activity-details">
-                            <h4>Shopping Voucher - $50 Discount</h4>
-                            <p>2 hours ago • Code: SHOP50</p>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon">🍕</div>
-                        <div class="activity-details">
-                            <h4>Food Delivery Voucher</h4>
-                            <p>Yesterday • Code: FOOD25 • $25 Off</p>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon">🎮</div>
-                        <div class="activity-details">
-                            <h4>Gaming Credit Voucher</h4>
-                            <p>3 days ago • Code: GAME100 • $100 Credit</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
+<!-- Navbar -->
+<header class="navbar">
+  <div class="hamburger" onclick="toggleMenu()">☰</div>
+  <div class="logo">Optima<span>Bank</span></div>
+  <nav class="nav-links">
+    <a href="./homepage.html" class="active">Home</a>
+    <a href="./about_us.html">About</a>
+    <a href="#">Shop</a>
+  </nav>
+  <div class="nav-actions">
+    <div class="search-box">
+      <input type="text" placeholder="Search..." />
+      <button type="submit">🔍</button>
     </div>
+    <div class="cart">
+      <a href="./cart/cart.html">
+        🛒
+        <span class="cart-count">2</span>
+      </a>
+    </div>
+    <div class="profile">
+      <img src="https://www.freepik.com/icon/profile_6878865" alt="Profile" class="profile-pic" id="profile-pic"/>
+      <div class="dropdown">
+        <a href="profile.html">My Account</a>
+        <a href="./cart/cart.html">Cart</a>
+        <a href="./cart/cart-history.html">Cart History</a>
+        <a href="#" onclick="logout()">Logout</a>
+      </div>
+    </div>
+  </div>
+</header>
 
-    <script src="homepage.js"></script>
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Your One-Stop <br/> Voucher Bank</h1>
+    <p>Discover, redeem, and enjoy exclusive vouchers for shopping, dining, travel, and more.</p>
+    <div class="hero-buttons">
+      <button class="btn primary">Shop Now</button>
+      <button class="btn secondary">Explore</button>
+    </div>
+  </div>
+</section>
+
+<!-- Highlights -->
+<section class="highlights">
+  <div class="highlight-item">⭐ Exceptional Service</div>
+  <div class="highlight-item">💸 Best Discounts Every Day</div>
+  <div class="highlight-item">🚚 Always Deliver</div>
+</section>
+
+<!-- Voucher Categories (PERFECT GRID) -->
+<section class="categories">
+  <h2>Voucher Categories</h2>
+  <div class="category-grid-2rows">
+    <div class="category-row">
+      <div class="category-card" onclick="window.location.href='category.php?category=Shopping'">
+        <span class="icon">🛍️</span>
+        <span class="category-label">Shopping</span>
+      </div>
+      <div class="category-card" onclick="window.location.href='category.php?category=Food%20%26%20Dining'">
+        <span class="icon">🍔</span>
+        <span class="category-label">Food & Dining</span>
+      </div>
+      <div class="category-card" onclick="window.location.href='category.php?category=Entertainment'">
+        <span class="icon">🎬</span>
+        <span class="category-label">Entertainment</span>
+      </div>
+    </div>
+    <div class="category-row">
+      <div class="category-card" onclick="window.location.href='category.php?category=Gift%20Cards'">
+        <span class="icon">🎁</span>
+        <span class="category-label">Gift Cards</span>
+      </div>
+      <div class="category-card" onclick="window.location.href='category.php?category=Travel'">
+        <span class="icon">✈️</span>
+        <span class="category-label">Travel</span>
+      </div>
+      <div class="category-card" onclick="window.location.href='category.php?category=Health%20%26%20Wellness'">
+        <span class="icon">💪</span>
+        <span class="category-label">Health & Wellness</span>
+      </div>
+    </div>
+  </div>
+  <div class="browse-btn-box">
+    <button class="btn primary" onclick="window.location.href='category.php'">Browse More Categories</button>
+  </div>
+</section>
+
+<!-- Our Vouchers -->
+<section class="products">
+  <h2>Our Vouchers</h2>
+  <div class="product-grid" id="voucher-grid">
+    <div class="loading">Loading vouchers...</div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="about">
+  <div class="about-content">
+    <h2>About</h2>
+    <h3>Shopping Voucher</h3>
+    <p>Enjoy more for less with our Shopping Vouchers. From fashion and groceries to everyday essentials, our vouchers make it easy to save while you shop for the things you love.</p>
+    <button class="btn secondary">Learn More</button>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-promo">
+    <h3>Get up to 50% off* voucher for your first order when you sign up for emails</h3>
+    <form class="signup-form">
+      <input type="email" placeholder="Enter email address" required />
+      <button type="submit" class="btn primary">SIGN UP</button>
+    </form>
+  </div>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Online Store</h4>
+      <ul>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">Pages</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Home</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <p>Phone: 234 810 699 9825</p>
+      <p>Email: optimabankonlinestore@gmail.com</p>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Privacy Notice</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Optima Bank. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+function logout() {
+    if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('userLoggedIn');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('redeemedVouchers');
+        window.location.href = 'authentication_page.html';
+    }
+}
+async function loadVouchers() {
+    try {
+        console.log('Attempting to fetch vouchers...');
+        const response = await fetch('voucher.php');
+        console.log('Response status:', response.status);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const vouchers = await response.json();
+        console.log('Vouchers data:', vouchers);
+        if (vouchers.error) {
+            console.error('Database error:', vouchers.error);
+            showError('Database error: ' + vouchers.error);
+            return;
+        }
+        const voucherGrid = document.getElementById('voucher-grid');
+        voucherGrid.innerHTML = '';
+        if (!vouchers || vouchers.length === 0) {
+            showError('No vouchers found in database');
+            return;
+        }
+        vouchers.slice(0, 3).forEach(voucher => {
+            const voucherCard = createVoucherCard(voucher);
+            voucherGrid.appendChild(voucherCard);
+        });
+    } catch (error) {
+        console.error('Error loading vouchers:', error);
+        showError('Error: ' + error.message);
+    }
+}
+function createVoucherCard(voucher) {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    console.log('Loading image:', voucher.image);
+    card.innerHTML = `
+        <div class="image">
+            <img src="${voucher.image}" alt="${voucher.title}" 
+                 onload="console.log('Image loaded successfully:', '${voucher.image}')"
+                 onerror="console.log('Image failed to load:', '${voucher.image}'); this.src='images/placeholder.jpg';">
+        </div>
+        <h3>${voucher.title}</h3>
+        <button class="btn small" onclick="viewVoucherDetails(${voucher.id})">View Details</button>
+    `;
+    return card;
+}
+function viewVoucherDetails(voucherId) {
+    window.location.href = `voucher_details.html?id=${voucherId}`;
+}
+function showError(message) {
+    const voucherGrid = document.getElementById('voucher-grid');
+    voucherGrid.innerHTML = '<div class="error">' + (message || 'Unable to load vouchers') + '</div>';
+}
+document.addEventListener('click', function(e) {
+    const profile = document.querySelector('.profile');
+    if (!profile) return;
+    if (profile.contains(e.target)) {
+        const isProfileClick = e.target.closest('.profile-pic') || e.target.closest('.profile');
+        if (isProfileClick) {
+            profile.classList.toggle('open');
+        }
+        return;
+    }
+    profile.classList.remove('open');
+});
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const profile = document.querySelector('.profile');
+        if (profile) profile.classList.remove('open');
+    }
+});
+document.addEventListener('DOMContentLoaded', loadVouchers);
+
+function toggleMenu() {
+  document.querySelector(".nav-links").classList.toggle("active");
+  document.querySelector(".nav-actions").classList.toggle("disactive");
+}
+</script>
+<script src="homepage.js"></script>
 </body>
 </html>

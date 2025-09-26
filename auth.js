@@ -202,17 +202,17 @@ async function handleGoogleSignIn(response) {
             localStorage.setItem('userId', data.user.id);
             localStorage.setItem('userEmail', data.user.email);
             localStorage.setItem('userName', data.user.fullname);
-            localStorage.setItem('userPoints', data.user.points);
+            localStorage.setItem('userPoints', data.user.points || '0');
             localStorage.setItem('loginMethod', 'google');
             
-            showMessage('Google Sign-In successful! Redirecting...', 'success');
+            showMessage('Google Sign-In successful! Redirecting to homepage...', 'success');
             
             // Redirect after short delay
             setTimeout(() => {
                 window.location.href = 'homepage.html';
             }, 1500);
         } else {
-            showMessage(data.message, 'error');
+            showMessage(data.message || 'Google Sign-In failed. Please try again.', 'error');
         }
     } catch (error) {
         console.error('Google Sign-In error:', error);
@@ -224,36 +224,21 @@ async function handleGoogleSignIn(response) {
 function initializeGoogleSignIn() {
     if (typeof google !== 'undefined' && google.accounts) {
         google.accounts.id.initialize({
-            client_id: '269492663844-jjsavuri4m3movsotbabtcsa0cpssvpt.apps.googleusercontent.com',
-            callback: handleGoogleSignIn,
+            client_id: '269492663844-vnt7nb01jt1935gsu7k6jq3fa8a8mmf0.apps.googleusercontent.com',
+            callback: handleCredentialResponse, // Use the global function from HTML
             auto_select: false,
             cancel_on_tap_outside: false
         });
         
         // Render the sign-in button for login form
-        const loginSignInDiv = document.getElementById("g_id_signin");
+        const loginSignInDiv = document.querySelector(".g_id_signin");
         if (loginSignInDiv) {
             google.accounts.id.renderButton(
                 loginSignInDiv,
                 { 
                     theme: "outline", 
                     size: "large",
-                    text: "continue_with",
-                    shape: "rectangular",
-                    width: "100%"
-                }
-            );
-        }
-        
-        // Render the sign-in button for signup form
-        const signupSignInDiv = document.getElementById("g_id_signin_signup");
-        if (signupSignInDiv) {
-            google.accounts.id.renderButton(
-                signupSignInDiv,
-                { 
-                    theme: "outline", 
-                    size: "large",
-                    text: "continue_with",
+                    text: "signin_with",
                     shape: "rectangular",
                     width: "100%"
                 }
