@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="auth.css">
     <!-- Google Sign-In API -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <meta name="google-signin-client_id" content="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com">
 </head>
 <body>
     <div class="container">
@@ -60,12 +61,21 @@
                 </div>
 
                 <div class="social-login">
-                    <button type="button" class="social-btn">
-                        <span>G</span> Google
-                    </button>
-                    <button type="button" class="social-btn">
-                        <span>in</span> LinkedIn
-                    </button>
+                    <div id="g_id_onload"
+                         data-client_id="269492663844-vnt7nb01jt1935gsu7k6jq3fa8a8mmf0.apps.googleusercontent.com"
+                         data-context="signin"
+                         data-ux_mode="popup"
+                         data-callback="handleCredentialResponse"
+                         data-auto_prompt="false">
+                    </div>
+                    <div class="g_id_signin"
+                         data-type="standard"
+                         data-shape="rectangular"
+                         data-theme="outline"
+                         data-text="signin_with"
+                         data-size="large"
+                         data-logo_alignment="left">
+                    </div>
                 </div>
             </form>
 
@@ -109,17 +119,73 @@
                 </div>
 
                 <div class="social-login">
-                    <button type="button" class="social-btn">
-                        <span>G</span> Google
-                    </button>
-                    <button type="button" class="social-btn">
-                        <span>in</span> LinkedIn
-                    </button>
+                    <div class="g_id_signin"
+                         data-type="standard"
+                         data-shape="rectangular"
+                         data-theme="outline"
+                         data-text="signup_with"
+                         data-size="large"
+                         data-logo_alignment="left">
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 
     <script src="auth.js"></script>
+    <script>
+        // Updated Google Sign-In handler that integrates with backend
+        function handleCredentialResponse(response) {
+            console.log("Google Sign-In response received");
+            
+            // Show loading message
+            showMessage('Signing in with Google...', 'info');
+            
+            // Send the token to our backend for processing
+            fetch('google_auth.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    google_token: response.credential
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Store user data in localStorage
+                    localStorage.setItem('userLoggedIn', 'true');
+                    localStorage.setItem('userId', data.user.id);
+                    localStorage.setItem('userEmail', data.user.email);
+                    localStorage.setItem('userName', data.user.fullname);
+                    localStorage.setItem('userPoints', data.user.points || '0');
+                    localStorage.setItem('loginMethod', 'google');
+                    
+                    showMessage('Google Sign-In successful! Redirecting to homepage...', 'success');
+                    
+                    // Redirect to homepage after short delay
+                    setTimeout(() => {
+                        window.location.href = 'homepage.html';
+                    }, 1500);
+                } else {
+                    showMessage(data.message || 'Google Sign-In failed. Please try again.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Google Sign-In error:', error);
+                showMessage('Google Sign-In failed. Please try again.', 'error');
+            });
+        }
+
+        function decodeJwtResponse(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+    </script>
 </body>
 </html>

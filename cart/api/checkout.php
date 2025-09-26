@@ -1,6 +1,7 @@
 <?php
 // api/checkout.php
 require_once 'common.php';
+require_once 'pdf_generator.php';
 
 try {
     $db = getDBConnection();
@@ -50,28 +51,34 @@ try {
             sendResponse(false, 'Your cart is empty');
         }
 
-        // Calculate total points needed
+        // Calculate total points needed and validate vouchers
         $total_points = 0;
         $order_items = [];
 
         foreach ($cart_items as $item) {
-            $total_points += $item['total_points'];
+            // Check if voucher still exists and is valid
+            if (!$item['voucher_name'] || !$item['points_required']) {
+                $db->rollBack();
+                sendResponse(false, 'One or more vouchers in your cart are no longer available');
+            }
+
+            $item_total = (int)$item['quantity'] * (int)$item['points_required'];
+            $total_points += $item_total;
 
             $order_items[] = [
-                'cart_item_id' => $item['id'],
-                'voucher_id' => $item['voucher_id'],
+                'cart_item_id' => (int)$item['id'],
+                'voucher_id' => (int)$item['voucher_id'],
                 'voucher_name' => $item['voucher_name'],
-                'quantity' => $item['quantity'],
-                'points_per_item' => $item['points_required'],
-                'total_points' => $item['total_points'],
-                'description' => $item['description'],
-                'image' => $item['image']
+                'quantity' => (int)$item['quantity'],
+                'points_per_item' => (int)$item['points_required'],
+                'total_points' => $item_total,
+                'description' => $item['description'] ?? '',
+                'image' => $item['image'] ?? ''
             ];
         }
 
-        // Step 1: Get user's available points
-        $user_query = "SELECT points FROM users WHERE id = :user_id FOR UPDATE";
-        // FOR UPDATE to lock row so points don’t get modified in parallel
+        // Get user's available points and user details
+        $user_query = "SELECT id, fullname, email, points FROM users WHERE id = :user_id FOR UPDATE";
         $user_stmt = $db->prepare($user_query);
         $user_stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $user_stmt->execute();
@@ -84,69 +91,134 @@ try {
 
         $available_points = (int) $user['points'];
 
-        // Step 2: Check if enough points
+        // Check if user has enough points
         if ($available_points < $total_points) {
             $db->rollBack();
-            sendResponse(false, 'Insufficient points. You need ' . $total_points . ' but only have ' . $available_points);
+            sendResponse(false, 'Insufficient points. You need ' . number_format($total_points) . ' but only have ' . number_format($available_points));
         }
 
-        // Step 3: Deduct points
+        // Deduct points from user
         $deduct_query = "UPDATE users SET points = points - :deduct WHERE id = :user_id";
         $deduct_stmt = $db->prepare($deduct_query);
         $deduct_stmt->bindParam(':deduct', $total_points, PDO::PARAM_INT);
         $deduct_stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        $deduct_stmt->execute();
+        
+        if (!$deduct_stmt->execute()) {
+            $db->rollBack();
+            sendResponse(false, 'Failed to deduct points');
+        }
 
-        // Move cart items to cart_item_history BEFORE clearing cart
+        // Move cart items to cart_item_history
+        $history_query = "INSERT INTO cart_item_history (
+                            voucher_id,
+                            user_id,
+                            quantity,
+                            completed_date
+                        ) VALUES (
+                            :voucher_id,
+                            :user_id,
+                            :quantity,
+                            NOW()
+                        )";
+        $history_stmt = $db->prepare($history_query);
+
         foreach ($cart_items as $item) {
-            $history_query = "INSERT INTO cart_item_history (
-                                voucher_id,
-                                user_id,
-                                quantity,
-                                completed_date
-                            ) VALUES (
-                                :voucher_id,
-                                :user_id,
-                                :quantity,
-                                NOW()
-                            )";
-
-            $history_stmt = $db->prepare($history_query);
             $history_stmt->bindParam(':voucher_id', $item['voucher_id'], PDO::PARAM_INT);
             $history_stmt->bindParam(':user_id', $item['user_id'], PDO::PARAM_INT);
             $history_stmt->bindParam(':quantity', $item['quantity'], PDO::PARAM_INT);
-            $history_stmt->execute();
+            
+            if (!$history_stmt->execute()) {
+                $db->rollBack();
+                sendResponse(false, 'Failed to save order history');
+            }
         }
 
         // Update voucher total_redeem count
+        $update_redeem_query = "UPDATE voucher SET total_redeem = total_redeem + :quantity WHERE id = :voucher_id";
+        $update_redeem_stmt = $db->prepare($update_redeem_query);
+
         foreach ($cart_items as $item) {
-            $update_redeem_query = "UPDATE voucher SET total_redeem = total_redeem + :quantity WHERE id = :voucher_id";
-            $update_redeem_stmt = $db->prepare($update_redeem_query);
             $update_redeem_stmt->bindParam(':quantity', $item['quantity'], PDO::PARAM_INT);
             $update_redeem_stmt->bindParam(':voucher_id', $item['voucher_id'], PDO::PARAM_INT);
-            $update_redeem_stmt->execute();
+            
+            if (!$update_redeem_stmt->execute()) {
+                $db->rollBack();
+                sendResponse(false, 'Failed to update voucher statistics');
+            }
         }
 
-        // Clear cart items AFTER adding to history
+        // Clear cart items
         $clear_cart_query = "DELETE FROM cart_items WHERE user_id = :user_id";
         $clear_cart_stmt = $db->prepare($clear_cart_query);
         $clear_cart_stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        $clear_cart_stmt->execute();
+        
+        if (!$clear_cart_stmt->execute()) {
+            $db->rollBack();
+            sendResponse(false, 'Failed to clear cart');
+        }
 
+        // Commit the transaction
         $db->commit();
+
+        // Generate PDF Receipt for checkout
+        $redemption_data = [
+            'total_items' => count($order_items),
+            'total_points' => $total_points,
+            'checkout_date' => date('Y-m-d H:i:s'),
+            'points_spent' => $total_points,
+            'remaining_points' => $available_points - $total_points
+        ];
+
+        $pdfBase64 = null;
+        $pdfType = null;
+
+        try {
+            // Check if TCPDF is available for advanced PDF
+            if (class_exists('TCPDF')) {
+                // Use TCPDF for better PDF generation if available
+                $pdfGenerator = new VoucherPDFGenerator();
+                // Create a combined voucher data for checkout
+                $combined_voucher = [
+                    'voucher_name' => 'Checkout Receipt - ' . count($order_items) . ' items',
+                    'points_required' => $total_points,
+                    'description' => 'Multiple vouchers checkout',
+                    'terms_and_condition' => 'All vouchers are now available in your history for use.'
+                ];
+                $pdfContent = $pdfGenerator->generateVoucherPDF($combined_voucher, $user, $redemption_data);
+                $pdfBase64 = base64_encode($pdfContent);
+                $pdfType = 'binary';
+            } else {
+                // Use simple HTML PDF generation
+                $checkout_html = SimplePDFGenerator::generateCheckoutReceipt($order_items, $user, $redemption_data);
+                $pdfBase64 = base64_encode($checkout_html);
+                $pdfType = 'html';
+            }
+        } catch (Exception $pdfError) {
+            error_log("PDF generation failed: " . $pdfError->getMessage());
+            // Continue without PDF - don't fail the checkout
+        }
 
         // Send success response with checkout details
         closeConnection($db);
         sendResponse(true, 'Checkout completed successfully', [
             'total_items' => count($order_items),
             'total_points' => $total_points,
+            'remaining_points' => $available_points - $total_points,
             'items' => $order_items,
             'checkout_date' => date('Y-m-d H:i:s'),
             'message' => 'Items have been moved to your history and vouchers are ready for use',
+            'pdf_receipt' => [
+                'available' => !is_null($pdfBase64),
+                'data' => $pdfBase64,
+                'type' => $pdfType,
+                'filename' => 'checkout_receipt_' . date('Ymd_His') . '.pdf'
+            ]
         ]);
 
     } catch (Exception $e) {
-        $db->rollBack();
+        if ($db->inTransaction()) {
+            $db->rollBack();
+        }
         throw $e;
     }
 

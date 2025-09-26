@@ -391,6 +391,90 @@ document
   });
 
 
+// Add PDF download functionality
+function downloadPDFReceipt(pdfData, filename) {
+    if (!pdfData.available) {
+        showMessage('PDF receipt not available', 'error');
+        return;
+    }
+
+    try {
+        if (pdfData.type === 'html') {
+            // For HTML receipts, open in new window for printing
+            const htmlContent = atob(pdfData.data);
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write(htmlContent);
+            newWindow.document.close();
+        } else {
+            // For binary PDF, trigger download
+            const byteCharacters = atob(pdfData.data);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], { type: 'application/pdf' });
+            
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        }
+    } catch (error) {
+        console.error('Error downloading PDF:', error);
+        showMessage('Error downloading PDF receipt', 'error');
+    }
+}
+
+// Update checkout function to handle PDF
+async function proceedToCheckout() {
+    if (!currentUserId) {
+        showMessage('Please log in to proceed with checkout', 'error');
+        return;
+    }
+
+    try {
+        showMessage('Processing checkout...', 'info');
+        
+        const response = await fetch('./api/checkout.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                user_id: currentUserId,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showMessage('Checkout completed successfully!', 'success');
+            
+            // Download PDF receipt if available
+            if (data.data.pdf_receipt && data.data.pdf_receipt.available) {
+                setTimeout(() => {
+                    downloadPDFReceipt(data.data.pdf_receipt, data.data.pdf_receipt.filename);
+                }, 1000);
+            }
+            
+            // Clear cart and redirect
+            setTimeout(() => {
+                window.location.href = './cart-history.html';
+            }, 2000);
+        } else {
+            showMessage(data.message || 'Checkout failed', 'error');
+        }
+    } catch (error) {
+        console.error('Checkout error:', error);
+        showMessage('Error processing checkout', 'error');
+    }
+}
+
 // Utility functions for user feedback
 function showSuccess(message) {
   showNotification(message, "success");
