@@ -360,6 +360,33 @@
         /* Keep single column on mobile */
       }
     }
+
+    .pdf-download-notification {
+      background: #e8f5e8;
+      border: 1px solid #4caf50;
+      color: #2e7d32;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 10px 0;
+      display: none;
+      animation: slideDown 0.3s ease;
+    }
+
+    .pdf-download-notification.show {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 
@@ -600,100 +627,118 @@
       contentDiv.innerHTML = `<div class="error">${message}</div>`;
     }
 
-    async function redeemVoucher() {
-      // Create a more professional modal or redirect
-      if (
-        confirm(
-          "Are you sure you want to redeem this voucher? This action cannot be undone."
-        )
-      ) {
-        // Here you would typically make an API call to redeem the voucher
-        try {
-          const response = await fetch("./cart/api/redeem_voucher.php", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              user_id: currentUserId, // Make sure this variable is set globally
-              voucher_id: getVoucherIdFromUrl(),
-            }),
-          });
-
-          const data = await response.json();
-
-          if (data.success) {
-            // ✅ Show success notification
-            showSuccess("Voucher redeemed successfully");
-          } else {
-            // ❌ Show error notification
-            showError(data.message || "Failed to redeem voucher");
-          }
-        } catch (error) {
-          console.error("Error redeeming voucher:", error);
-          showError("Error redeeming voucher");
-        }
+    // Add PDF download functionality
+    function downloadPDFReceipt(pdfData, filename) {
+      if (!pdfData.available) {
+        showMessage('PDF receipt not available', 'error');
+        return;
       }
-    }
 
-    function shareVoucher() {
-      if (navigator.share) {
-        navigator.share({
-          title: document.querySelector(".voucher-title").textContent,
-          text: "Check out this amazing voucher from Optima Bank!",
-          url: window.location.href,
-        });
-      } else {
-        // Fallback for browsers that don't support Web Share API
-        navigator.clipboard
-          .writeText(window.location.href)
-          .then(() => {
-            alert("Voucher link copied to clipboard!");
-          })
-          .catch(() => {
-            const dummy = document.createElement("textarea");
-            dummy.value = window.location.href;
-            document.body.appendChild(dummy);
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-            alert("Voucher link copied to clipboard!");
-          });
-      }
-    }
+      const notification = document.createElement('div');
+      notification.className = 'pdf-download-notification show';
+      notification.innerHTML = '📄 Downloading your voucher receipt...';
+      document.querySelector('.voucher-actions').appendChild(notification);
 
-    async function addToCart(voucherId, quantity = 1) {
       try {
-        const response = await fetch("./cart/api/add_to_cart.php", {
-          method: "POST",
+        if (pdfData.type === 'html') {
+          // For HTML receipts, open in new window for printing
+          const htmlContent = atob(pdfData.data);
+          const newWindow = window.open('', '_blank');
+          newWindow.document.write(htmlContent);
+          newWindow.document.close();
+        } else {
+          // For binary PDF, trigger download
+          const byteCharacters = atob(pdfData.data);
+          const byteNumbers = new Array(byteCharacters.length);
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+          const byteArray = new Uint8Array(byteNumbers);
+          const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
+        }
+
+        // Update notification
+        setTimeout(() => {
+          notification.innerHTML = '✅ Receipt downloaded successfully!';
+          setTimeout(() => {
+            notification.remove();
+          }, 3000);
+        }, 500);
+
+      } catch (error) {
+        console.error('Error downloading PDF:', error);
+        notification.innerHTML = '❌ Error downloading receipt';
+        notification.style.background = '#ffebee';
+        notification.style.borderColor = '#f44336';
+        notification.style.color = '#c62828';
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
+      }
+    }
+
+    // Update redeem function
+    async function redeemVoucher() {
+      if (!currentUserId) {
+        showMessage('Please log in to redeem vouchers', 'error');
+        return;
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const voucherId = urlParams.get('id');
+
+      if (!voucherId) {
+        showMessage('Invalid voucher ID', 'error');
+        return;
+      }
+
+      try {
+        showMessage('Processing redemption...', 'info');
+
+        const response = await fetch('./cart/api/redeem_voucher.php', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            user_id: currentUserId, // Make sure this variable is set globally
-            voucher_id: voucherId,
-            quantity: quantity,
+            user_id: currentUserId,
+            voucher_id: parseInt(voucherId),
           }),
         });
 
         const data = await response.json();
 
         if (data.success) {
-          // ✅ Show success notification
-          showSuccess(data.message || "Item added to cart successfully");
+          showMessage('Voucher redeemed successfully!', 'success');
 
-          // ✅ Update cart count UI
-          if (data.data && data.data.cart_summary) {
-            const cartCount = data.data.cart_summary.cart_count || 0;
-            updateCartCount(cartCount);
+          // Download PDF receipt if available
+          if (data.data.pdf_receipt && data.data.pdf_receipt.available) {
+            setTimeout(() => {
+              downloadPDFReceipt(data.data.pdf_receipt, data.data.pdf_receipt.filename);
+            }, 1000);
           }
+
+          // Update points display if available
+          if (data.data.remaining_points !== undefined) {
+            // Update points in localStorage
+            localStorage.setItem('userPoints', data.data.remaining_points);
+          }
+
         } else {
-          // ❌ Show error notification
-          showError(data.message || "Failed to add item to cart");
+          showMessage(data.message || 'Redemption failed', 'error');
         }
       } catch (error) {
-        console.error("Error adding to cart:", error);
-        showError("Error adding to cart");
+        console.error('Redemption error:', error);
+        showMessage('Error processing redemption', 'error');
       }
     }
 
